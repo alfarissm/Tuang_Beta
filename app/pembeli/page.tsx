@@ -36,7 +36,7 @@ function formatRupiah(angka: number) {
   });
 }
 
-export default function pageclient() {
+export default function PageClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [user, setUser] = useState<{ nama: string; nim: string; role: string } | null>(null);
