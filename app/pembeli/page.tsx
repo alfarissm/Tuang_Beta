@@ -150,6 +150,9 @@ export default function PembeliPage() {
 
   const subtotal = cart.reduce((t, i) => t + i.price * i.quantity, 0);
 
+  // WRAPPER untuk memastikan setSelectedSeller menerima string
+  const handleSetSelectedSeller = (id: string | number) => setSelectedSeller(String(id));
+
   if (!user) return null;
 
   return (
@@ -288,7 +291,7 @@ export default function PembeliPage() {
               <SellerDropdown
                 sellerOptions={sellerOptions}
                 selectedSeller={selectedSeller}
-                setSelectedSeller={setSelectedSeller}
+                setSelectedSeller={handleSetSelectedSeller}
               />
               <div className="flex flex-wrap gap-1 sm:gap-2">
                 <button
