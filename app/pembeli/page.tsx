@@ -36,7 +36,7 @@ function formatRupiah(angka: number) {
   });
 }
 
-export default function PembeliPage() {
+export default function PembeliPageClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [user, setUser] = useState<{ nama: string; nim: string; role: string } | null>(null);
