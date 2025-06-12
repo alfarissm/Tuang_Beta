@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import PembeliPageClient from "./pageclient";
+import PembeliPageClient from "./page";
 
 export default function Page() {
   return (
