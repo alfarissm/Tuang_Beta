@@ -2,6 +2,14 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  note?: string;
+}
+
 function formatRupiah(angka: number) {
   return angka.toLocaleString("id-ID", {
     style: "currency",
@@ -13,7 +21,7 @@ function formatRupiah(angka: number) {
 
 export default function PembayaranPage() {
   const router = useRouter();
-  const [cart, setCart] = useState<any[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [nama, setNama] = useState("");
   const [nim, setNim] = useState("");
   const [tableNumber, setTableNumber] = useState("");

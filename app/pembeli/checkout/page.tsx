@@ -2,7 +2,15 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-function getCart() {
+interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  note?: string;
+}
+
+function getCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
     return JSON.parse(localStorage.getItem("cart") ?? "[]");
@@ -24,7 +32,7 @@ export default function CheckoutPage() {
 
   const cart = getCart();
   const subtotal = cart.reduce(
-    (t: number, i: any) => t + i.price * i.quantity,
+    (t: number, i: CartItem) => t + i.price * i.quantity,
     0
   );
   const tableNumber = getTableNumber();
@@ -84,7 +92,7 @@ export default function CheckoutPage() {
 
         <div className="mt-6 text-left">
           <h3 className="font-bold mb-2">Ringkasan Pesanan</h3>
-          {cart.map((item: any) => (
+          {cart.map((item: CartItem) => (
             <div
               key={item.id + (item.note ?? "")}
               className="flex justify-between mb-1"
