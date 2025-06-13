@@ -170,6 +170,12 @@ function getLast7Days() {
   return days;
 }
 
+// Tipe aman untuk order filter
+type OrderFilter = "all" | "baru" | "diproses" | "selesai";
+function isOrderFilter(val: string): val is OrderFilter {
+  return ["all", "baru", "diproses", "selesai"].includes(val);
+}
+
 export default function SellerPage() {
   const [user, setUser] = useState<{ id: number; nama: string; nip: string; role: string } | null>(null);
   const router = useRouter();
@@ -180,7 +186,7 @@ export default function SellerPage() {
   const [menuModal, setMenuModal] = useState<null | { mode: "add" | "edit"; data?: MenuData }>(null);
 
   // FILTER PESANAN
-  const [orderFilter, setOrderFilter] = useState<"all" | "baru" | "diproses" | "selesai">("all");
+  const [orderFilter, setOrderFilter] = useState<OrderFilter>("all");
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -409,7 +415,9 @@ export default function SellerPage() {
             <select
               className="border px-2 py-1 rounded text-sm"
               value={orderFilter}
-              onChange={e => setOrderFilter(e.target.value as "all" | "baru" | "diproses" | "selesai")}
+              onChange={e => {
+                if (isOrderFilter(e.target.value)) setOrderFilter(e.target.value);
+              }}
             >
               <option value="all">Semua</option>
               <option value="baru">Baru</option>
