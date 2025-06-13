@@ -306,7 +306,7 @@ export default function AdminPage() {
           ...m,
           id: Date.now(),
           sellerId,
-          updatedBy: user.nama,
+          updatedBy: user!.nama,
           updatedAt: new Date().toISOString()
         }
       ]);
