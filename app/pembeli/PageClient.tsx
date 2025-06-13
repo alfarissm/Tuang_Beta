@@ -350,7 +350,7 @@ export default function PageClient() {
 
       {noteModalVisible && (
       <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white/90 backdrop-blur-md rounded-lg p-6 w-full max-w-xs shadow-xl">
+        <div className="bg-white backdrop-blur-md rounded-lg p-6 w-full max-w-xs shadow-xl">
           <h4 className="font-bold mb-2">Pesan/Catatan untuk {selectedFoodForNote?.name}</h4>
           <textarea
             className="w-full border rounded px-3 py-2 mb-4"
