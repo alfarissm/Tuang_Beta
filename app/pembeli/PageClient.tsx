@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Image from "next/image";
@@ -39,7 +39,6 @@ function formatRupiah(angka: number) {
 export default function PageClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [user, setUser] = useState<{ nama: string; nim: string; role: string } | null>(null);
 
   // Nomor meja dari URL/manual
   const mejaFromUrl = searchParams.get("meja");
@@ -47,20 +46,6 @@ export default function PageClient() {
 
   // Modal meja
   const [manualModalVisible, setManualModalVisible] = useState(!mejaFromUrl);
-
-  useEffect(() => {
-    const userStr = localStorage.getItem("user");
-    if (!userStr) {
-      router.replace("/login");
-      return;
-    }
-    const u = JSON.parse(userStr);
-    if (!u || u.role !== "pembeli") {
-      router.replace("/login");
-      return;
-    }
-    setUser(u);
-  }, [router]);
 
   // Filter kategori dan penjual
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -92,12 +77,8 @@ export default function PageClient() {
     return catOk && sellerOk && searchOk;
   });
 
-  // Handler add to cart, validasi hanya boleh 1 penjual
+  // Handler add to cart, kini tanpa validasi penjual
   const handleAddToCart = (item: FoodItem) => {
-    if (cart.length > 0 && cart[0].sellerId !== item.sellerId) {
-      alert("Cart hanya bisa berisi menu dari satu penjual saja. Selesaikan pesanan atau kosongkan cart terlebih dahulu.");
-      return;
-    }
     setSelectedFoodForNote(item);
     setNoteValue("");
     setNoteModalVisible(true);
@@ -139,11 +120,10 @@ export default function PageClient() {
     }
   };
 
-  // Checkout sekarang: simpan cart, seller, dan meja ke localStorage, lalu redirect ke /pembeli/checkout
+  // Checkout sekarang: simpan seluruh cart dan meja ke localStorage, lalu redirect ke /pembeli/checkout
   const handleCheckout = () => {
     if (cart.length === 0) return;
     localStorage.setItem("cart", JSON.stringify(cart));
-    localStorage.setItem("selectedSeller", JSON.stringify(cart[0]?.sellerId));
     localStorage.setItem("tableNumber", currentTable || "");
     router.push("/pembeli/checkout");
   };
@@ -152,8 +132,6 @@ export default function PageClient() {
 
   // WRAPPER untuk memastikan setSelectedSeller menerima string
   const handleSetSelectedSeller = (id: string | number) => setSelectedSeller(String(id));
-
-  if (!user) return null;
 
   return (
     <>
@@ -188,7 +166,6 @@ export default function PageClient() {
             from { right: -100vw; }
             to   { right: 0; }
           }
-          /* Responsive adjustments */
           @media (max-width: 768px) {
             .drawer {
               width: 100vw !important;
@@ -284,7 +261,6 @@ export default function PageClient() {
           </div>
         )}
 
-
         {currentTable && (
           <>
             <div className="flex flex-wrap gap-2 mb-6 items-center">
@@ -373,7 +349,6 @@ export default function PageClient() {
       </div>
     )}
 
-
       {/* Cart Drawer */}
       <div
         className={`drawer fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg z-20 overflow-y-auto ${cartDrawerOpen ? "open" : "closed"}`}
@@ -399,6 +374,9 @@ export default function PageClient() {
                     <h4 className="font-medium">{item.name}</h4>
                     <p className="text-gray-500 text-sm">{formatRupiah(item.price)} / porsi</p>
                     {item.note && <div className="text-xs text-gray-500 italic">Note: {item.note}</div>}
+                    <div className="text-xs text-gray-400">
+                      Penjual: {sellers.find(s => s.id === item.sellerId)?.nama}
+                    </div>
                   </div>
                   <div className="flex items-center">
                     <button
