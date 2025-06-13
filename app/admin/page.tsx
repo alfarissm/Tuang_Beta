@@ -375,30 +375,32 @@ export default function AdminPage() {
   // --- EXPORT CSV --- //
   const handleExportMenus = () => {
     const rows = [
-      ["ID", "Nama", "Penjual", "Kategori", "Harga", "Stok", "Last Edit", "Last Editor"],
-      ...menus.map(m => [
-        m.id, m.name,
-        penjualList.find(p => p.id === m.sellerId)?.nama || "-",
-        categories.find(c => c.value === m.category)?.label || m.category,
-        formatRupiah(m.price), m.stok,
-        m.updatedAt ? new Date(m.updatedAt).toLocaleString() : "",
-        m.updatedBy || ""
-      ])
-    ];
-    downloadCSV("menus.csv", rows);
-  };
-  const handleExportOrders = () => {
-    const rows = [
       ["ID", "Meja", "Status", "Waktu", "Total", "Item List"],
       ...orders.map(o => [
-        o.id, o.table, o.status,
+        `${o.id ?? ""}`,
+        o.table ?? "",
+        o.status ?? "",
         new Date(o.createdAt).toLocaleString(),
         formatRupiah(o.items.reduce((t, i) => t + i.price * i.qty, 0)),
-        o.items.map(i => `${i.name} x${i.qty}`).join(", ")
+        o.items.map(i => `${i.name ?? ""} x${i.qty ?? ""}`).join(", ")
       ])
     ];
     downloadCSV("orders.csv", rows);
   };
+  const handleExportOrders = () => {
+  const rows = [
+    ["ID", "Meja", "Status", "Waktu", "Total", "Item List"],
+    ...orders.map(o => [
+      `${o.id ?? ""}`,
+      `${o.table ?? ""}`,
+      `${o.status ?? ""}`,
+      new Date(o.createdAt).toLocaleString(),
+      formatRupiah(o.items.reduce((t, i) => t + i.price * i.qty, 0)),
+      o.items.map(i => `${i.name ?? ""} x${i.qty ?? ""}`).join(", ")
+    ])
+  ];
+  downloadCSV("orders.csv", rows);
+};
 
   // --- MONITORING PESANAN --- //
   const filteredOrders = useMemo(() =>
