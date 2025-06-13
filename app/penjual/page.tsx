@@ -132,7 +132,7 @@ function formatRupiah(angka: number) {
   });
 }
 
-// ICON SVG (sama seperti sebelumnya, tidak diubah)
+// ICON SVG 
 function IconClipboard() {
   return (
     <svg className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 2.25h6a2.25 2.25 0 012.25 2.25v.75h1.5a.75.75 0 01.75.75v14.25A2.25 2.25 0 0118.25 22.5H5.75A2.25 2.25 0 013.5 20.25V6A.75.75 0 014.25 5.25h1.5v-.75A2.25 2.25 0 018 2.25h1zM9 2.25V3a.75.75 0 01-.75.75H7.5A.75.75 0 017.5 3V2.25"></path></svg>
@@ -170,7 +170,7 @@ function getLast7Days() {
   return days;
 }
 
-// Tipe aman untuk order filter
+// order filter
 type OrderFilter = "all" | "baru" | "diproses" | "selesai";
 function isOrderFilter(val: string): val is OrderFilter {
   return ["all", "baru", "diproses", "selesai"].includes(val);
@@ -240,7 +240,7 @@ export default function SellerPage() {
       ...order,
       items: order.items
         .map(item => {
-          // Tambahkan image menu ke setiap item
+          // Tambahkan image menu
           const menu = menus.find(m => m.id === item.menuId);
           return menu ? { ...item, image: menu.image } : item;
         })
@@ -267,8 +267,6 @@ export default function SellerPage() {
   const filteredOrders = orderFilter === "all"
     ? myOrders
     : myOrders.filter(o => o.status === orderFilter);
-
-  // --- Fitur Tambahan ---
 
   // 1. Menu Terlaris
   const menuSales: Record<number, number> = {};
@@ -619,7 +617,7 @@ function MenuModal({ mode, data, onClose, onSave }: {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
       <form className="bg-white rounded p-6 w-full max-w-xs space-y-3" onSubmit={handleSubmit}>
         <div className="font-bold text-lg mb-2">{mode === "add" ? "Tambah Menu" : "Edit Menu"}</div>
         {error && <div className="text-red-600">{error}</div>}
