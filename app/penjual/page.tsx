@@ -16,14 +16,22 @@ type MenuData = {
 };
 
 const penjualList = [
-  { id: 1, nama: "Wowo", nim: "456" },
-  { id: 2, nama: "Luhut", nim: "789" }
+  { id: 1, nama: "Wowo", nip: "456" },
+  { id: 2, nama: "Luhut", nip: "789" }
 ];
 
+// Dummy menu untuk Wowo (id:1) dan Luhut (id:2)
 const initialMenus: MenuData[] = [
-  { id: 101, sellerId: 1, name: "Mie Ayam", price: 15000, category: "mains", stok: 10, image: "/Mie-Ayam.jpg"},
+  // Penjual Wowo (id: 1)
+  { id: 101, sellerId: 1, name: "Mie Ayam", price: 15000, category: "mains", stok: 10, image: "/Mie-ayam.jpg" },
   { id: 102, sellerId: 1, name: "Ayam Bakar", price: 15000, category: "mains", stok: 5, image: "/Ayam bakar.jpg" },
-  { id: 201, sellerId: 2, name: "Burger", price: 25000, category: "mains", stok: 7, image: "/burger.jpg"},
+  { id: 201, sellerId: 1, name: "Matcha", price: 25000, category: "drinks", stok: 8, image: "/matcha.webp" },
+  { id: 202, sellerId: 1, name: "Jus Alpukat", price: 25000, category: "drinks", stok: 7, image: "/jus.jpg" },
+  // Penjual Luhut (id: 2)
+  { id: 301, sellerId: 2, name: "Martabak", price: 10000, category: "sides", stok: 12, image: "/martabak.jpg" },
+  { id: 302, sellerId: 2, name: "Nasi Goreng", price: 10000, category: "mains", stok: 9, image: "/nasigoreng.jpg" },
+  { id: 303, sellerId: 2, name: "Teh", price: 10000, category: "drinks", stok: 20, image: "/tehhangat.jpeg" },
+  { id: 304, sellerId: 2, name: "Iphone 16", price: 16999999, category: "others", stok: 2, image: "/iphone.webp" },
 ];
 
 type OrderItem = {
@@ -33,6 +41,7 @@ type OrderItem = {
   qty: number;
   price: number;
   note?: string;
+  image?: string;
 };
 
 type Order = {
@@ -43,18 +52,67 @@ type Order = {
   createdAt: string;
 };
 
+// Dummy pesanan kedua penjual
 const initialOrders: Order[] = [
+  // Pesanan untuk Wowo (id:1)
   {
-    id: 101,
+    id: 1001,
     table: "8A",
     items: [
       { menuId: 101, sellerId: 1, name: "Mie Ayam", qty: 2, price: 15000, note: "Tanpa bawang" },
       { menuId: 102, sellerId: 1, name: "Ayam Bakar", qty: 1, price: 15000 },
-      { menuId: 201, sellerId: 2, name: "Burger", qty: 1, price: 25000, note: "Tanpa mayo" },
     ],
     status: "baru",
-    createdAt: "2025-06-11T10:00:00Z",
-  }
+    createdAt: "2025-06-13T09:00:00Z",
+  },
+  {
+    id: 1002,
+    table: "5B",
+    items: [
+      { menuId: 201, sellerId: 1, name: "Matcha", qty: 2, price: 25000 },
+      { menuId: 202, sellerId: 1, name: "Jus Alpukat", qty: 1, price: 25000 },
+    ],
+    status: "diproses",
+    createdAt: "2025-06-12T15:45:00Z",
+  },
+  {
+    id: 1003,
+    table: "1C",
+    items: [
+      { menuId: 102, sellerId: 1, name: "Ayam Bakar", qty: 2, price: 15000 },
+    ],
+    status: "selesai",
+    createdAt: "2025-06-10T12:00:00Z",
+  },
+  // Pesanan untuk Luhut (id:2)
+  {
+    id: 2001,
+    table: "4",
+    items: [
+      { menuId: 301, sellerId: 2, name: "Martabak", qty: 3, price: 10000 },
+      { menuId: 302, sellerId: 2, name: "Nasi Goreng", qty: 2, price: 10000 },
+    ],
+    status: "baru",
+    createdAt: "2025-06-13T10:20:00Z",
+  },
+  {
+    id: 2002,
+    table: "2",
+    items: [
+      { menuId: 303, sellerId: 2, name: "Teh", qty: 5, price: 10000, note: "Tanpa gula" },
+    ],
+    status: "selesai",
+    createdAt: "2025-06-11T19:30:00Z",
+  },
+  {
+    id: 2003,
+    table: "6",
+    items: [
+      { menuId: 304, sellerId: 2, name: "Iphone 16", qty: 1, price: 16999999 },
+    ],
+    status: "diproses",
+    createdAt: "2025-06-12T13:10:00Z",
+  },
 ];
 
 const categories = [
@@ -62,25 +120,67 @@ const categories = [
   { value: "sides", label: "Lauk/Pendamping" },
   { value: "drinks", label: "Minuman" },
   { value: "desserts", label: "Dessert" },
+  { value: "others", label: "Lainnya" },
 ];
 
 function formatRupiah(angka: number) {
   return angka.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
-    minimumFractionDigits: 0,
+    minipumFractionDigits: 0,
     maximumFractionDigits: 0,
   });
 }
 
+// ICON SVG (sama seperti sebelumnya, tidak diubah)
+function IconClipboard() {
+  return (
+    <svg className="w-7 h-7 text-blue-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 2.25h6a2.25 2.25 0 012.25 2.25v.75h1.5a.75.75 0 01.75.75v14.25A2.25 2.25 0 0118.25 22.5H5.75A2.25 2.25 0 013.5 20.25V6A.75.75 0 014.25 5.25h1.5v-.75A2.25 2.25 0 018 2.25h1zM9 2.25V3a.75.75 0 01-.75.75H7.5A.75.75 0 017.5 3V2.25"></path></svg>
+  );
+}
+function IconCheckCircle() {
+  return (
+    <svg className="w-7 h-7 text-green-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l2.25 2.25L15 10.5m4.5 1.5A7.5 7.5 0 1112 3a7.5 7.5 0 017.5 9z"></path></svg>
+  );
+}
+function IconMoney() {
+  return (
+    <svg className="w-7 h-7 text-yellow-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 7.5v9a2.25 2.25 0 002.25 2.25h12a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-12A2.25 2.25 0 003.75 7.5zM7.5 12a4.5 4.5 0 109 0 4.5 4.5 0 00-9 0z"></path></svg>
+  );
+}
+function IconFire() {
+  return (
+    <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 3c.44 1.36.63 2.68.41 3.99-.39 2.35-2.26 3.87-2.26 5.51 0 1.53 1.23 2.75 2.75 2.75s2.75-1.22 2.75-2.75c0-2.12-2.02-3.61-2.02-6.5z"></path><path strokeLinecap="round" strokeLinejoin="round" d="M19.44 13.34a8.5 8.5 0 01-14.88 0"></path></svg>
+  );
+}
+function IconWarning() {
+  return (
+    <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M10.29 3.86l-8.42 14A2 2 0 003.87 21h16.26a2 2 0 001.71-3.14l-8.42-14a2 2 0 00-3.42 0z"></path></svg>
+  );
+}
+
+// Helper untuk 7 hari terakhir
+function getLast7Days() {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    days.push(new Date(d.getFullYear(), d.getMonth(), d.getDate()));
+  }
+  return days;
+}
+
 export default function SellerPage() {
-  const [user, setUser] = useState<{ id: number; nama: string; nim: string; role: string } | null>(null);
+  const [user, setUser] = useState<{ id: number; nama: string; nip: string; role: string } | null>(null);
   const router = useRouter();
 
   const [menus, setMenus] = useState<MenuData[]>(initialMenus);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
 
   const [menuModal, setMenuModal] = useState<null | { mode: "add" | "edit"; data?: MenuData }>(null);
+
+  // FILTER PESANAN
+  const [orderFilter, setOrderFilter] = useState<"all" | "baru" | "diproses" | "selesai">("all");
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -93,7 +193,7 @@ export default function SellerPage() {
       router.replace("/login");
       return;
     }
-    const seller = penjualList.find(s => s.nim === u.nim);
+    const seller = penjualList.find(s => s.nip === u.nip);
     setUser({ ...u, id: seller?.id ?? 0 });
   }, [router]);
 
@@ -132,7 +232,13 @@ export default function SellerPage() {
   const myOrders = orders
     .map(order => ({
       ...order,
-      items: order.items.filter(item => item.sellerId === user.id)
+      items: order.items
+        .map(item => {
+          // Tambahkan image menu ke setiap item
+          const menu = menus.find(m => m.id === item.menuId);
+          return menu ? { ...item, image: menu.image } : item;
+        })
+        .filter(item => item.sellerId === user.id)
     }))
     .filter(order => order.items.length > 0);
 
@@ -151,6 +257,42 @@ export default function SellerPage() {
       sum + order.items.reduce((t, i) => t + i.qty * i.price, 0), 0
     );
 
+  // Filter berdasarkan status
+  const filteredOrders = orderFilter === "all"
+    ? myOrders
+    : myOrders.filter(o => o.status === orderFilter);
+
+  // --- Fitur Tambahan ---
+
+  // 1. Menu Terlaris
+  const menuSales: Record<number, number> = {};
+  myOrders.forEach(order => {
+    order.items.forEach(item => {
+      menuSales[item.menuId] = (menuSales[item.menuId] || 0) + item.qty;
+    });
+  });
+  // Urutkan dari qty terbanyak
+  const bestMenuId = Object.keys(menuSales).sort((a, b) => menuSales[Number(b)] - menuSales[Number(a)])[0];
+  const bestSellerMenu = myMenus.find(m => m.id === Number(bestMenuId));
+  const bestSellerMenuQty = bestMenuId ? menuSales[Number(bestMenuId)] : 0;
+
+  // 2. Stok Hampir Habis (stok <= 3)
+  const lowStockMenus = myMenus.filter(m => m.stok <= 3);
+
+  // 3. Grafik Pendapatan 7 Hari
+  const last7days = getLast7Days();
+  const dailyIncome = last7days.map(day => {
+    const dayStr = day.toISOString().slice(0, 10);
+    return myOrders
+      .filter(o =>
+        o.status === "selesai" &&
+        o.createdAt.slice(0, 10) === dayStr
+      )
+      .reduce((sum, o) =>
+        sum + o.items.reduce((t, i) => t + i.qty * i.price, 0), 0
+      );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50 py-6">
       <div className="container mx-auto px-4">
@@ -158,32 +300,131 @@ export default function SellerPage() {
           <Image src="/Frame 7.png" alt="Logo" width={40} height={40} />
           <div>
             <h1 className="text-3xl font-bold">Dashboard Penjual</h1>
-            <p className="text-gray-700">Selamat datang, <b>{user.nama}</b> ({user.nim})</p>
+            <p className="text-gray-700">Selamat datang, <b>{user.nama}</b> ({user.nip})</p>
           </div>
         </div>
         {/* Statistik */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
-            <div className="text-gray-500 text-sm">Total Pesanan</div>
-            <div className="text-2xl font-bold">{totalOrder}</div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+          <div className="bg-white p-5 rounded-xl shadow flex items-center gap-4">
+            <div className="bg-blue-100 rounded-full p-3">
+              <IconClipboard />
+            </div>
+            <div>
+              <div className="text-gray-500 text-sm">Total Pesanan</div>
+              <div className="text-2xl font-bold">{totalOrder}</div>
+            </div>
           </div>
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
-            <div className="text-gray-500 text-sm">Pesanan Selesai</div>
-            <div className="text-2xl font-bold">{myOrders.filter(o => o.status === "selesai").length}</div>
+          <div className="bg-white p-5 rounded-xl shadow flex items-center gap-4">
+            <div className="bg-green-100 rounded-full p-3">
+              <IconCheckCircle />
+            </div>
+            <div>
+              <div className="text-gray-500 text-sm">Pesanan Selesai</div>
+              <div className="text-2xl font-bold">{myOrders.filter(o => o.status === "selesai").length}</div>
+            </div>
           </div>
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
-            <div className="text-gray-500 text-sm">Pendapatan</div>
-            <div className="text-2xl font-bold">{formatRupiah(totalIncome)}</div>
+          <div className="bg-white p-5 rounded-xl shadow flex items-center gap-4">
+            <div className="bg-yellow-100 rounded-full p-3">
+              <IconMoney />
+            </div>
+            <div>
+              <div className="text-gray-500 text-sm">Pendapatan</div>
+              <div className="text-2xl font-bold">{formatRupiah(totalIncome)}</div>
+            </div>
+          </div>
+        </div>
+        {/* Fitur tambahan */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {/* Menu Terlaris */}
+          <div className="bg-white p-4 rounded-xl shadow flex items-center gap-4">
+            <IconFire />
+            <div>
+              <div className="text-gray-600 text-sm font-medium mb-1">Menu Terlaris</div>
+              {bestSellerMenu ? (
+                <div className="flex items-center gap-2">
+                  <Image src={bestSellerMenu.image} alt={bestSellerMenu.name} width={40} height={28} className="rounded object-cover border" />
+                  <span className="font-semibold">{bestSellerMenu.name}</span>
+                  <span className="bg-orange-100 text-orange-800 px-2 py-0.5 rounded text-xs font-bold">{bestSellerMenuQty} terjual</span>
+                </div>
+              ) : <div className="text-gray-400 text-sm">Belum ada penjualan.</div>}
+            </div>
+          </div>
+          {/* Stok Hampir Habis */}
+          <div className="bg-white p-4 rounded-xl shadow">
+            <div className="flex items-center gap-2 mb-1">
+              <IconWarning />
+              <span className="text-red-600 font-semibold text-sm">Stok Hampir Habis</span>
+            </div>
+            {lowStockMenus.length === 0 ? (
+              <div className="text-gray-400 text-sm">Semua menu cukup stok.</div>
+            ) : (
+              <ul className="mt-1 space-y-1">
+                {lowStockMenus.map(menu => (
+                  <li key={menu.id} className="flex items-center gap-2">
+                    <Image src={menu.image} alt={menu.name} width={28} height={20} className="rounded object-cover border" />
+                    <span>{menu.name}</span>
+                    <span className="bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-bold">Sisa {menu.stok}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          {/* Grafik Pendapatan 7 Hari */}
+          <div className="bg-white p-4 rounded-xl shadow">
+            <div className="text-gray-600 text-sm font-medium mb-2">Pendapatan 7 Hari Terakhir</div>
+            <div className="flex items-end gap-1 h-28 w-full">
+              {dailyIncome.map((income, idx) => {
+                // Cari max untuk normalize tinggi bar
+                const max = Math.max(...dailyIncome, 1);
+                return (
+                  <div key={idx} className="flex flex-col items-center justify-end w-full">
+                    <div
+                      className="bg-green-400 rounded-t"
+                      style={{
+                        height: `${Math.max(10, (income / max) * 80)}px`,
+                        width: "16px",
+                        transition: "height 0.3s"
+                      }}
+                      title={formatRupiah(income)}
+                    />
+                    <div className="text-[10px] text-gray-400 mt-0.5">
+                      {last7days[idx].getDate()}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-between text-[10px] text-gray-400 mt-1">
+              {last7days.map((d, idx) => (
+                <span key={idx} className="w-6 text-center">{d.toLocaleDateString("id-ID", { weekday: "short" })}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Filter Pesanan */}
+        <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
+          <h2 className="font-bold text-lg">Pesanan Masuk</h2>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-500">Filter:</span>
+            <select
+              className="border px-2 py-1 rounded text-sm"
+              value={orderFilter}
+              onChange={e => setOrderFilter(e.target.value as any)}
+            >
+              <option value="all">Semua</option>
+              <option value="baru">Baru</option>
+              <option value="diproses">Diproses</option>
+              <option value="selesai">Selesai</option>
+            </select>
           </div>
         </div>
         {/* Daftar Pesanan */}
         <div className="bg-white p-4 rounded shadow mb-8">
-          <h2 className="font-bold text-lg mb-4">Pesanan Masuk</h2>
-          {myOrders.length === 0 && (
+          {filteredOrders.length === 0 && (
             <div className="text-gray-400 text-center py-8">Belum ada pesanan.</div>
           )}
           <div className="space-y-4">
-            {myOrders.map(order => (
+            {filteredOrders.map(order => (
               <div key={order.id} className="border rounded-lg px-4 py-2 flex flex-col md:flex-row md:items-center md:justify-between">
                 <div>
                   <div className="flex gap-4 items-center mb-1">
@@ -200,14 +441,26 @@ export default function SellerPage() {
                   </div>
                   <ul className="flex flex-wrap gap-4 mb-1">
                     {order.items.map((item, idx) => (
-                      <li key={idx} className="flex flex-col items-start gap-1 bg-gray-50 rounded px-2 py-1 min-w-[120px]">
-                        <div className="font-medium text-sm">{item.name}</div>
-                        <div className="text-xs text-gray-500">
-                          {item.qty} x {formatRupiah(item.price)}
-                        </div>
-                        {item.note && (
-                          <div className="text-xs text-yellow-600 italic break-words max-w-[150px]">Note: {item.note}</div>
+                      <li key={idx} className="flex items-center gap-2 bg-gray-50 rounded px-2 py-1 min-w-[180px]">
+                        {/* Gambar menu di pesanan */}
+                        {item.image && (
+                          <Image
+                            src={item.image}
+                            alt={item.name}
+                            width={40}
+                            height={28}
+                            className="rounded object-cover border"
+                          />
                         )}
+                        <div className="flex flex-col items-start gap-1">
+                          <div className="font-medium text-sm">{item.name}</div>
+                          <div className="text-xs text-gray-500">
+                            {item.qty} x {formatRupiah(item.price)}
+                          </div>
+                          {item.note && (
+                            <div className="text-xs text-yellow-600 italic break-words max-w-[150px]">Note: {item.note}</div>
+                          )}
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -340,7 +593,7 @@ function MenuModal({ mode, data, onClose, onSave }: {
       return;
     }
     if (stok < 1) {
-      setError("Stok harus minimal 1!");
+      setError("Stok harus minipal 1!");
       return;
     }
     if (!imageFile && !imagePreview) {
