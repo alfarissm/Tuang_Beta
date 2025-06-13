@@ -169,6 +169,7 @@ export default function AdminPage() {
   const [menus, setMenus] = useState<Menu[]>(initialMenus);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
+  
 
   const penjualList = users.filter(u => u.role === "penjual");
   const [selectedSeller, setSelectedSeller] = useState<number | "all">(penjualList.length ? penjualList[0].id : "all");
@@ -183,11 +184,14 @@ export default function AdminPage() {
   // Order modal & filter
   const [orderModal, setOrderModal] = useState<null | Order>(null);
   const [orderFilter, setOrderFilter] = useState<string>("all");
+  const [searchOrder, setSearchOrder] = useState("");
 
   // Aktivitas
   const [logList, setLogList] = useState<string[]>([]);
-
   const router = useRouter();
+
+  // Search pesanan
+  
 
   // Finance rekap penjual
   const [selectedFinanceSeller, setSelectedFinanceSeller] = useState<number | "all">("all");
@@ -403,12 +407,17 @@ export default function AdminPage() {
 };
 
   // --- MONITORING PESANAN --- //
-  const filteredOrders = useMemo(() =>
-    orders.filter(o =>
-      orderFilter === "all" || o.status === orderFilter
-    ).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
-    [orders, orderFilter]
+
+  const filteredOrders = orders
+  .filter(order => orderFilter === "all" || order.status === orderFilter)
+  .filter(order =>
+    searchOrder.trim() === "" ||
+    `${order.id}`.includes(searchOrder) ||
+    order.table.toLowerCase().includes(searchOrder.toLowerCase()) ||
+    order.items.some(i => i.name.toLowerCase().includes(searchOrder.toLowerCase())) ||
+    order.createdAt.toLowerCase().includes(searchOrder.toLowerCase()) // <-- filter tanggal
   );
+// Lalu paging dari filteredOrders jadi pagedOrders.
   const { page: orderPage, setPage: setOrderPage, pageCount: orderPageCount, pagedData: pagedOrders } =
     usePagination(filteredOrders, ORDER_PAGE_SIZE);
 
@@ -443,20 +452,22 @@ export default function AdminPage() {
         </div>
 
         {/* --- STATISTIK --- */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
+        <div className="grid grid-cols-2 gap-4 mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+          <div className="bg-white p-4 rounded shadow">
             <div className="text-gray-500 text-sm">Total Pesanan</div>
             <div className="text-2xl font-bold">{totalOrder}</div>
           </div>
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
+          <div className="bg-white p-4 rounded shadow">
             <div className="text-gray-500 text-sm">Pesanan Selesai</div>
-            <div className="text-2xl font-bold">{orders.filter(o => o.status === "selesai").length}</div>
+            <div className="text-2xl font-bold">
+              {orders.filter((o) => o.status === "selesai").length}
+            </div>
           </div>
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
+          <div className="bg-white p-4 rounded shadow">
             <div className="text-gray-500 text-sm">Pendapatan</div>
             <div className="text-2xl font-bold">{formatRupiah(totalIncome)}</div>
           </div>
-          <div className="bg-white p-4 rounded shadow min-w-[180px]">
+          <div className="bg-white p-4 rounded shadow">
             <div className="text-gray-500 text-sm">Menu Terlaris</div>
             <div className="text-lg font-bold">{bestMenu ? bestMenu.name : "-"}</div>
           </div>
@@ -546,38 +557,49 @@ export default function AdminPage() {
 
         {/* --- DAFTAR MENU --- */}
         <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="font-bold text-lg">Daftar Menu</h2>
-              <span className="text-gray-400">Penjual:</span>
-              <select
-                className="border rounded px-2 py-1"
-                value={selectedSeller}
-                onChange={e => setSelectedSeller(e.target.value === "all" ? "all" : Number(e.target.value))}
-              >
-                <option value="all">Semua Penjual</option>
-                {penjualList.map(p => (
-                  <option key={p.id} value={p.id}>{p.nama}</option>
-                ))}
-              </select>
-              <span className="text-gray-400">Kategori:</span>
-              <select
-                className="border rounded px-2 py-1"
-                value={selectedCategory}
-                onChange={e => setSelectedCategory(e.target.value)}
-              >
-                <option value="all">Semua</option>
-                {categories.map(c => (
-                  <option key={c.value} value={c.value}>{c.label}</option>
-                ))}
-              </select>
-              <input
-                className="border px-2 py-1 rounded"
-                placeholder="Cari menu"
-                value={searchMenu}
-                onChange={e => setSearchMenu(e.target.value)}
-              />
-            </div>
+         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-500 mb-1">Penjual:</label>
+            <select
+              className="border rounded px-2 py-1"
+              value={selectedSeller}
+              onChange={e =>
+                setSelectedSeller(e.target.value === "all" ? "all" : Number(e.target.value))
+              }
+            >
+              <option value="all">Semua Penjual</option>
+              {penjualList.map(p => (
+                <option key={p.id} value={p.id}>{p.nama}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-500 mb-1">Kategori:</label>
+            <select
+              className="border rounded px-2 py-1"
+              value={selectedCategory}
+              onChange={e => setSelectedCategory(e.target.value)}
+            >
+              <option value="all">Semua</option>
+              {categories.map(c => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col">
+            <label className="text-sm text-gray-500 mb-1">Cari Menu:</label>
+            <input
+              className="border px-2 py-1 rounded"
+              placeholder="Cari menu"
+              value={searchMenu}
+              onChange={e => setSearchMenu(e.target.value)}
+            />
+          </div>
+
+
+        
             <div className="flex gap-2">
               <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
                 onClick={handleAddMenu}
@@ -662,6 +684,12 @@ export default function AdminPage() {
                 <option value="selesai">Selesai</option>
               </select>
             </div>
+            <input
+              className="border px-2 py-1 rounded"
+              placeholder="Cari pesanan (ID, meja,)"
+              value={searchOrder}
+              onChange={e => setSearchOrder(e.target.value)}
+            />
             <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
               onClick={handleExportOrders}>Export Pesanan CSV</button>
           </div>
@@ -669,7 +697,7 @@ export default function AdminPage() {
             <table className="min-w-full border">
               <thead>
                 <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">ID</th>
+                  <th className="py-2 px-3 border">NIP/NIM</th>
                   <th className="py-2 px-3 border">Meja</th>
                   <th className="py-2 px-3 border">Status</th>
                   <th className="py-2 px-3 border">Waktu</th>
@@ -1084,7 +1112,7 @@ function OrderModal({ data, onClose }: { data: Order, onClose: () => void }) {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded p-6 w-full max-w-md">
         <div className="font-bold text-lg mb-2">Detail Pesanan</div>
-        <div className="mb-2 text-sm">ID: <b>{data.id}</b></div>
+        <div className="mb-2 text-sm">NIP/NIM: <b>{data.id}</b></div>
         <div className="mb-2 text-sm">Meja: <b>{data.table}</b></div>
         <div className="mb-2 text-sm">Status: <b>{data.status}</b></div>
         <div className="mb-2 text-sm">Dibuat: {new Date(data.createdAt).toLocaleString()}</div>
