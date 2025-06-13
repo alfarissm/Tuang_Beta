@@ -314,7 +314,7 @@ export default function AdminPage() {
     } else if (menuModal?.mode === "edit") {
       setMenus(menus => menus.map(menu =>
         menu.id === m.id
-          ? { ...m, sellerId, updatedBy: user.nama, updatedAt: new Date().toISOString() }
+          ? { ...m, sellerId, updatedBy: user!.nama, updatedAt: new Date().toISOString() }
           : menu
       ));
       setLogList(l => [`[${new Date().toLocaleString()}] Admin mengedit menu '${m.name}'`, ...l]);
@@ -341,7 +341,7 @@ export default function AdminPage() {
         ...menu,
         id: Date.now(),
         sellerId: idNum,
-        updatedBy: user.nama,
+        updatedBy: user!.nama,
         updatedAt: new Date().toISOString(),
         name: menu.name + " (Copy)"
       }
@@ -436,7 +436,7 @@ export default function AdminPage() {
           <Image src="/Frame 7.png" alt="Logo" width={40} height={40} />
           <div>
             <h1 className="text-3xl font-bold">Dashboard Admin</h1>
-            <p className="text-gray-700">Selamat datang, <b>{user.nama}</b> ({user.nip})</p>
+            <p className="text-gray-700">Selamat datang, <b>{user!.nama}</b> ({user.nip})</p>
           </div>
         </div>
 
@@ -697,7 +697,7 @@ export default function AdminPage() {
                           onClick={() => {
                             setOrders(orders => orders.map(o =>
                               o.id === order.id
-                                ? { ...o, status: "selesai", updatedBy: user.nama, updatedAt: new Date().toISOString() }
+                                ? { ...o, status: "selesai", updatedBy: user!.nama, updatedAt: new Date().toISOString() }
                                 : o
                             ));
                             setLogList(l => [`[${new Date().toLocaleString()}] Admin menandai pesanan #${order.id} selesai`, ...l]);
