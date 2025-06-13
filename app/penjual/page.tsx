@@ -57,7 +57,7 @@ const initialOrders: Order[] = [
   // Pesanan untuk Wowo (id:1)
   {
     id: 1001,
-    table: "8A",
+    table: "8",
     items: [
       { menuId: 101, sellerId: 1, name: "Mie Ayam", qty: 2, price: 15000, note: "Tanpa bawang" },
       { menuId: 102, sellerId: 1, name: "Ayam Bakar", qty: 1, price: 15000 },
@@ -67,7 +67,7 @@ const initialOrders: Order[] = [
   },
   {
     id: 1002,
-    table: "5B",
+    table: "5",
     items: [
       { menuId: 201, sellerId: 1, name: "Matcha", qty: 2, price: 25000 },
       { menuId: 202, sellerId: 1, name: "Jus Alpukat", qty: 1, price: 25000 },
@@ -77,7 +77,7 @@ const initialOrders: Order[] = [
   },
   {
     id: 1003,
-    table: "1C",
+    table: "1",
     items: [
       { menuId: 102, sellerId: 1, name: "Ayam Bakar", qty: 2, price: 15000 },
     ],
@@ -298,7 +298,7 @@ export default function SellerPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6">
+    <div className="min-h-screen bg-gray py-6">
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-4 mb-8">
           <Image src="/Frame 7.png" alt="Logo" width={40} height={40} />

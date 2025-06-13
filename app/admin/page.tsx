@@ -440,7 +440,7 @@ export default function AdminPage() {
 
   if (!user) return null;
   return (
-    <div className="min-h-screen bg-gray-50 py-6">
+    <div className="min-h-screen bg-gray py-6">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
