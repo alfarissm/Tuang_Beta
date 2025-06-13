@@ -158,7 +158,7 @@ function usePagination<T>(data: T[], pageSize: number) {
     () => data.slice((page - 1) * pageSize, page * pageSize),
     [data, page, pageSize]
   );
-  useEffect(() => { if (page > pageCount) setPage(1); }, [data.length, pageCount]);
+  useEffect(() => { if (page > pageCount) setPage(1); }, [data.length, pageCount, page]); // <= DITAMBAH 'page'
   return { page, setPage, pageCount, pagedData };
 }
 
@@ -295,9 +295,9 @@ export default function AdminPage() {
     }
   };
   const handleSaveMenu = (m: Menu) => {
-    let sellerId = typeof selectedSeller === "number"
-      ? selectedSeller
-      : (penjualList[0]?.id || 0);
+  const sellerId = typeof selectedSeller === "number"
+    ? selectedSeller
+    : (penjualList[0]?.id || 0);
 
     if (menuModal?.mode === "add") {
       setMenus(menus => [
@@ -426,7 +426,6 @@ export default function AdminPage() {
   }, [orders, menus]);
 
   // --- RENDER --- //
-  const pembeliList = users.filter(u => u.role === "pembeli");
 
   if (!user) return null;
   return (
