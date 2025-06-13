@@ -401,7 +401,7 @@ export default function SellerPage() {
             </div>
           </div>
         </div>
-        {/* Filter Pesanan */}
+         {/* Filter Pesanan */}
         <div className="flex flex-wrap items-center justify-between mb-4 gap-2">
           <h2 className="font-bold text-lg">Pesanan Masuk</h2>
           <div className="flex items-center gap-2">
@@ -409,7 +409,7 @@ export default function SellerPage() {
             <select
               className="border px-2 py-1 rounded text-sm"
               value={orderFilter}
-              onChange={e => setOrderFilter(e.target.value as any)}
+              onChange={e => setOrderFilter(e.target.value as "all" | "baru" | "diproses" | "selesai")}
             >
               <option value="all">Semua</option>
               <option value="baru">Baru</option>
