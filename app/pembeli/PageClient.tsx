@@ -232,8 +232,8 @@ export default function PageClient() {
         <div className="container mx-auto px-2 sm:px-4 py-3 flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <Image src="/Frame 7.png" alt="Logo" className="h-7 w-auto mr-1" width={30} height={30} />
-            <h1 className="text-xl font-bold text-gray-800">Tuang</h1>
+            <Image src="/Frame 7.png" alt="Logo" className="h-10 w-auto mr-1" width={50} height={50} />
+            <h1 className="text-lg font-bold text-gray-800">Tuang</h1>
           </div>
           {/* Search bar */}
           <div className="flex items-center space-x-2 sm:space-x-4">
@@ -331,7 +331,7 @@ export default function PageClient() {
                         <span className="text-green-500 font-bold">{formatRupiah(item.price)}</span>
                       </div>
                       <div className="text-sm text-gray-500 mb-1">
-                        Penjual: {sellers.find(s => s.id === item.sellerId)?.nama}
+                        {sellers.find(s => s.id === item.sellerId)?.nama}
                       </div>
                       <button
                         className="add-to-cart w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-medium mt-auto"
@@ -348,31 +348,31 @@ export default function PageClient() {
         )}
       </main>
 
-      {/* Modal input note */}
       {noteModalVisible && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-xs">
-            <h4 className="font-bold mb-2">Pesan/Catatan untuk {selectedFoodForNote?.name}</h4>
-            <textarea
-              className="w-full border rounded px-3 py-2 mb-4"
-              placeholder="Contoh: Tanpa bawang, level 2, dsb (opsional)"
-              rows={3}
-              value={noteValue}
-              onChange={e => setNoteValue(e.target.value)}
-            />
-            <div className="flex justify-end gap-2">
-              <button
-                className="px-4 py-1 rounded bg-gray-200"
-                onClick={() => setNoteModalVisible(false)}
-              >Batal</button>
-              <button
-                className="px-4 py-1 rounded bg-green-500 text-white"
-                onClick={handleSubmitNote}
-              >Tambah</button>
-            </div>
+      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="bg-white/90 backdrop-blur-md rounded-lg p-6 w-full max-w-xs shadow-xl">
+          <h4 className="font-bold mb-2">Pesan/Catatan untuk {selectedFoodForNote?.name}</h4>
+          <textarea
+            className="w-full border rounded px-3 py-2 mb-4"
+            placeholder="Contoh: Tanpa bawang, level 2, dsb (opsional)"
+            rows={3}
+            value={noteValue}
+            onChange={e => setNoteValue(e.target.value)}
+          />
+          <div className="flex justify-end gap-2">
+            <button
+              className="px-4 py-1 rounded bg-gray-200"
+              onClick={() => setNoteModalVisible(false)}
+            >Batal</button>
+            <button
+              className="px-4 py-1 rounded bg-green-500 text-white"
+              onClick={handleSubmitNote}
+            >Tambah</button>
           </div>
         </div>
-      )}
+      </div>
+    )}
+
 
       {/* Cart Drawer */}
       <div

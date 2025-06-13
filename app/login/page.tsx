@@ -8,55 +8,48 @@ import Image from "next/image";
 type User = {
   id: number;
   nama: string;
-  nim: string;
+  nip: string;
   password: string;
-  role: "pembeli" | "penjual" | "admin";
+  role: "penjual" | "admin";
 };
 
-// Dummy data user terdaftar (ganti dengan API/database jika perlu)
+// Dummy data user terdaftar (hanya penjual dan admin)
 const users: User[] = [
-  { id: 1, nama: "Bahlil", nim: "123", password: "", role: "pembeli" },
-  { id: 2, nama: "Wowo", nim: "456", password: "penjual", role: "penjual" },
-  { id: 3, nama: "Luhut", nim: "789", password: "penjual", role: "penjual" },
-  { id: 4, nama: "Admin", nim: "000", password: "admin", role: "admin" },
+  { id: 2, nama: "Wowo", nip: "456", password: "penjual", role: "penjual" },
+  { id: 3, nama: "Luhut", nip: "789", password: "penjual", role: "penjual" },
+  { id: 4, nama: "Admin", nip: "000", password: "admin", role: "admin" },
 ];
 
 export default function LoginPage() {
   const [nama, setNama] = useState("");
-  const [nim, setNim] = useState("");
+  const [nip, setNip] = useState("");
   const [password, setPassword] = useState("");
   const [step, setStep] = useState<1 | 2>(1);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [error, setError] = useState("");
   const router = useRouter();
 
-  // Step 1: Nama & NIM
-  const handleNamaNim = (e: React.FormEvent<HTMLFormElement>) => {
+  // Step 1: Nama & NIP
+  const handleNamaNip = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
-    if (!nama.trim() || !nim.trim()) {
-      setError("Nama dan NIM wajib diisi!");
+    if (!nama.trim() || !nip.trim()) {
+      setError("Nama dan NIP wajib diisi!");
       return;
     }
     const user = users.find(
       u =>
         u.nama.toLowerCase() === nama.trim().toLowerCase() &&
-        u.nim === nim.trim()
+        u.nip === nip.trim()
     );
     if (!user) {
-      setError("Nama/NIM tidak terdaftar!");
+      setError("Nama/NIP tidak terdaftar!");
       return;
     }
-    if (user.role === "pembeli") {
-      // Pembeli langsung login
-      localStorage.setItem("user", JSON.stringify(user));
-      router.push("/pembeli");
-    } else {
-      // Penjual/Admin lanjut step konfirmasi password
-      setCurrentUser(user);
-      setStep(2);
-      setPassword("");
-    }
+    // Penjual/Admin lanjut step konfirmasi password
+    setCurrentUser(user);
+    setStep(2);
+    setPassword("");
   };
 
   // Step 2: Password
@@ -83,10 +76,10 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-green-400">
       <form
         className="bg-white p-8 rounded shadow-md w-full max-w-md space-y-4"
-        onSubmit={step === 1 ? handleNamaNim : handlePassword}
+        onSubmit={step === 1 ? handleNamaNip : handlePassword}
       >
         <div className="flex justify-center mb-2">
-          <Image src="/Frame 7.png" alt="Logo" width={44} height={44} />
+          <Image src="/Frame 7.png" alt="Logo" width={80} height={80} />
         </div>
         <h2 className="text-2xl font-bold text-center mb-2">Login</h2>
         {error && <div className="text-red-600 text-center">{error}</div>}
@@ -105,13 +98,13 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium">NIM</label>
+              <label className="block mb-1 font-medium">NIP</label>
               <input
                 type="text"
                 className="w-full border rounded px-3 py-2"
-                value={nim}
-                onChange={e => setNim(e.target.value)}
-                placeholder="NIM"
+                value={nip}
+                onChange={e => setNip(e.target.value)}
+                placeholder="NIP"
               />
             </div>
           </>
@@ -131,11 +124,11 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label className="block mb-1 font-medium">NIM</label>
+              <label className="block mb-1 font-medium">NIP</label>
               <input
                 type="text"
                 className="w-full border rounded px-3 py-2 bg-gray-100"
-                value={currentUser.nim}
+                value={currentUser.nip}
                 disabled
                 readOnly
                 tabIndex={-1}
@@ -176,7 +169,6 @@ export default function LoginPage() {
         </button>
         <div className="text-xs text-gray-400 pt-2">
           <b>Demo Data:</b> <br />
-          Pembeli: Bahlil / 123<br />
           Penjual: Wowo / 456 / penjual<br />
           Penjual: Luhut / 789 / penjual<br />
           Admin: Admin / 000 / admin
