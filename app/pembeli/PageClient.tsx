@@ -76,7 +76,7 @@ export default function PageClient() {
     const searchOk = item.name.toLowerCase().includes(search.toLowerCase());
     return catOk && sellerOk && searchOk;
   });
-
+  
   // Handler add to cart, kini tanpa validasi penjual
   const handleAddToCart = (item: FoodItem) => {
     setSelectedFoodForNote(item);

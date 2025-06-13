@@ -116,9 +116,9 @@ const initialOrders: Order[] = [
 ];
 
 const categories = [
-  { value: "mains", label: "Makanan Utama" },
-  { value: "sides", label: "Lauk/Pendamping" },
-  { value: "drinks", label: "Minuman" },
+  { value: "mains", label: "Mains" },
+  { value: "sides", label: "Sides" },
+  { value: "drinks", label: "Drinks" },
   { value: "desserts", label: "Dessert" },
   { value: "others", label: "Lainnya" },
 ];
