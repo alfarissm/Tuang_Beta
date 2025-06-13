@@ -127,7 +127,7 @@ function formatRupiah(angka: number) {
   return angka.toLocaleString("id-ID", {
     style: "currency",
     currency: "IDR",
-    minipumFractionDigits: 0,
+    minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   });
 }
