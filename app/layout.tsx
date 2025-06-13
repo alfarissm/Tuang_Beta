@@ -2,8 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'QR Food Order',
-  description: 'Order makanan cepat dan praktis dengan QR code!',
+  title: 'Tuang',
+  description: 'Order makanan lebih cepat dan mudah',
 }
 
 export default function RootLayout({
