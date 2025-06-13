@@ -68,7 +68,7 @@ const initialUsers: User[] = [
 ];
 
 const initialMenus: Menu[] = [
-  { id: 101, sellerId: 2, name: "Mie Ayam", price: 15000, category: "mains", image: "/Mie-Ayam.jpg", stok: 10 },
+  { id: 101, sellerId: 2, name: "Mie Ayam", price: 15000, category: "mains", image: "/Mie-ayam.jpg", stok: 10 },
   { id: 102, sellerId: 2, name: "Ayam Bakar", price: 17000, category: "mains", image: "/Ayam bakar.jpg", stok: 5 },
   { id: 201, sellerId: 3, name: "Martabak", price: 25000, category: "mains", image: "/martabak.jpg", stok: 7 },
   { id: 202, sellerId: 3, name: "Jus Alpukat", price: 12000, category: "drinks", image: "/jus.jpg", stok: 12 },
@@ -973,7 +973,7 @@ function MenuModal({ mode, data, penjualList, selectedSeller, categories, onClos
       name: name.trim(),
       category,
       price: Number(price),
-      image: imageFile ? imagePreview : imagePreview || "/Mie-Ayam.jpg",
+      image: imageFile ? imagePreview : imagePreview || "/Mie-ayam.jpg",
       sellerId: sellerId,
       stok
     });
