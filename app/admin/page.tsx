@@ -1047,7 +1047,7 @@ function UserModal({ mode, data, role, onClose, onSave }: {
     onSave({ id: data?.id, nama: nama.trim(), nip: nip.trim(), role });
   };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
       <form className="bg-white rounded p-6 w-full max-w-xs space-y-3" onSubmit={handleSubmit}>
         <div className="font-bold text-lg mb-2">{mode === "add" ? `Tambah ${role.charAt(0).toUpperCase() + role.slice(1)}` : `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`}</div>
         {error && <div className="text-red-600">{error}</div>}
@@ -1144,7 +1144,7 @@ function MenuModal({ mode, data, penjualList, selectedSeller, categories, onClos
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
       <form className="bg-white rounded p-6 w-full max-w-xs space-y-3" onSubmit={handleSubmit}>
         <div className="font-bold text-lg mb-2">{mode === "add" ? "Tambah Menu" : "Edit Menu"}</div>
         {error && <div className="text-red-600">{error}</div>}
@@ -1249,7 +1249,7 @@ function CategoryModal({ mode, data, onClose, onSave }: {
     onSave({ label: label.trim(), value: value.trim() });
   };
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
       <form className="bg-white rounded p-6 w-full max-w-xs space-y-3" onSubmit={handleSubmit}>
         <div className="font-bold text-lg mb-2">{mode === "add" ? "Tambah Kategori" : "Edit Kategori"}</div>
         {error && <div className="text-red-600">{error}</div>}
@@ -1273,7 +1273,7 @@ function CategoryModal({ mode, data, onClose, onSave }: {
 // --- MODAL: ORDER DETAIL --- //
 function OrderModal({ data, onClose }: { data: Order, onClose: () => void }) {
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded p-6 w-full max-w-md">
         <div className="font-bold text-lg mb-2">Detail Pesanan</div>
         <div className="mb-2 text-sm">NIP/NIM: <b>{data.id}</b></div>
