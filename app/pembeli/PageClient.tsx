@@ -67,7 +67,7 @@ export default function PageClient() {
   const categories = Array.from(new Set(foodItems.map(f => f.category)));
 
   // Ambil semua penjual unik
-  const sellerOptions = [{ id: "all", nama: "Semua Penjual" }, ...sellers];
+  const sellerOptions = [{ id: "all", nama: "Semua Toko" }, ...sellers];
 
   // Filter menu
   const filteredItems = foodItems.filter(item => {
