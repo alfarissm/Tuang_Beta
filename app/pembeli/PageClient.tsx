@@ -280,7 +280,7 @@ export default function PageClient() {
                 {categories.map((cat) => (
                   <button
                     key={cat}
-                    className={`category-btn px-4 py-1 rounded-full border border-gray-300 ${selectedCategory === cat ? "active bg-[#53B175] text-white" : ""}`}
+                    className={`category-btn px-4 py-1 rounded-full border border-white ${selectedCategory === cat ? "active bg-[#53B175] text-white" : ""}`}
                     onClick={() => setSelectedCategory(cat)}
                   >
                     {cat.charAt(0).toUpperCase() + cat.slice(1)}

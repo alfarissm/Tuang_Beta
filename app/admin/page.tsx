@@ -52,6 +52,68 @@ type Order = {
 
 type Category = { value: string; label: string };
 
+// --- ICON COMPONENTS --- //
+const DashboardIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
+  </svg>
+);
+
+const UsersIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+  </svg>
+);
+
+const CategoryIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+  </svg>
+);
+
+const MenuIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+  </svg>
+);
+
+const OrderIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+  </svg>
+);
+
+const FinanceIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const LogIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+  </svg>
+);
+
+const LogoutIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+  </svg>
+);
+
+const HamburgerIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+  </svg>
+);
+
+const CloseIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 // --- DUMMY DATA --- //
 const initialCategories: Category[] = [
   { value: "mains", label: "Makanan Utama" },
@@ -158,7 +220,7 @@ function usePagination<T>(data: T[], pageSize: number) {
     () => data.slice((page - 1) * pageSize, page * pageSize),
     [data, page, pageSize]
   );
-  useEffect(() => { if (page > pageCount) setPage(1); }, [data.length, pageCount, page]); // <= DITAMBAH 'page'
+  useEffect(() => { if (page > pageCount) setPage(1); }, [data.length, pageCount, page]);
   return { page, setPage, pageCount, pagedData };
 }
 
@@ -169,7 +231,8 @@ export default function AdminPage() {
   const [menus, setMenus] = useState<Menu[]>(initialMenus);
   const [orders, setOrders] = useState<Order[]>(initialOrders);
   const [categories, setCategories] = useState<Category[]>(initialCategories);
-  
+  const [activeSection, setActiveSection] = useState("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const penjualList = users.filter(u => u.role === "penjual");
   const [selectedSeller, setSelectedSeller] = useState<number | "all">(penjualList.length ? penjualList[0].id : "all");
@@ -189,9 +252,6 @@ export default function AdminPage() {
   // Aktivitas
   const [logList, setLogList] = useState<string[]>([]);
   const router = useRouter();
-
-  // Search pesanan
-  
 
   // Finance rekap penjual
   const [selectedFinanceSeller, setSelectedFinanceSeller] = useState<number | "all">("all");
@@ -242,7 +302,6 @@ export default function AdminPage() {
     }
     setUser(u);
   }, [router]);
-
 
   // --- CRUD USER --- //
   const handleDeleteUser = (id: number) => {
@@ -299,9 +358,9 @@ export default function AdminPage() {
     }
   };
   const handleSaveMenu = (m: Menu) => {
-  const sellerId = typeof selectedSeller === "number"
-    ? selectedSeller
-    : (penjualList[0]?.id || 0);
+    const sellerId = typeof selectedSeller === "number"
+      ? selectedSeller
+      : (penjualList[0]?.id || 0);
 
     if (menuModal?.mode === "add") {
       setMenus(menus => [
@@ -392,32 +451,31 @@ export default function AdminPage() {
     downloadCSV("orders.csv", rows);
   };
   const handleExportOrders = () => {
-  const rows = [
-    ["ID", "Meja", "Status", "Waktu", "Total", "Item List"],
-    ...orders.map(o => [
-      `${o.id ?? ""}`,
-      `${o.table ?? ""}`,
-      `${o.status ?? ""}`,
-      new Date(o.createdAt).toLocaleString(),
-      formatRupiah(o.items.reduce((t, i) => t + i.price * i.qty, 0)),
-      o.items.map(i => `${i.name ?? ""} x${i.qty ?? ""}`).join(", ")
-    ])
-  ];
-  downloadCSV("orders.csv", rows);
-};
+    const rows = [
+      ["ID", "Meja", "Status", "Waktu", "Total", "Item List"],
+      ...orders.map(o => [
+        `${o.id ?? ""}`,
+        `${o.table ?? ""}`,
+        `${o.status ?? ""}`,
+        new Date(o.createdAt).toLocaleString(),
+        formatRupiah(o.items.reduce((t, i) => t + i.price * i.qty, 0)),
+        o.items.map(i => `${i.name ?? ""} x${i.qty ?? ""}`).join(", ")
+      ])
+    ];
+    downloadCSV("orders.csv", rows);
+  };
 
   // --- MONITORING PESANAN --- //
-
   const filteredOrders = orders
-  .filter(order => orderFilter === "all" || order.status === orderFilter)
-  .filter(order =>
-    searchOrder.trim() === "" ||
-    `${order.id}`.includes(searchOrder) ||
-    order.table.toLowerCase().includes(searchOrder.toLowerCase()) ||
-    order.items.some(i => i.name.toLowerCase().includes(searchOrder.toLowerCase())) ||
-    order.createdAt.toLowerCase().includes(searchOrder.toLowerCase()) // <-- filter tanggal
-  );
-// Lalu paging dari filteredOrders jadi pagedOrders.
+    .filter(order => orderFilter === "all" || order.status === orderFilter)
+    .filter(order =>
+      searchOrder.trim() === "" ||
+      `${order.id}`.includes(searchOrder) ||
+      order.table.toLowerCase().includes(searchOrder.toLowerCase()) ||
+      order.items.some(i => i.name.toLowerCase().includes(searchOrder.toLowerCase())) ||
+      order.createdAt.toLowerCase().includes(searchOrder.toLowerCase())
+    );
+
   const { page: orderPage, setPage: setOrderPage, pageCount: orderPageCount, pagedData: pagedOrders } =
     usePagination(filteredOrders, ORDER_PAGE_SIZE);
 
@@ -436,171 +494,179 @@ export default function AdminPage() {
     return menus.find(m => m.id === id);
   }, [orders, menus]);
 
-  // --- RENDER --- //
+  // --- SIDEBAR ITEMS --- //
+  const sidebarItems = [
+    { id: "dashboard", label: "Dashboard", icon: DashboardIcon },
+    { id: "users", label: "Akun Penjual", icon: UsersIcon },
+    { id: "categories", label: "Kategori", icon: CategoryIcon },
+    { id: "menus", label: "Daftar Menu", icon: MenuIcon },
+    { id: "orders", label: "Pesanan", icon: OrderIcon },
+    { id: "finance", label: "Keuangan", icon: FinanceIcon },
+    { id: "logs", label: "Log Aktivitas", icon: LogIcon },
+  ];
 
-  if (!user) return null;
-  return (
-    <div className="min-h-screen bg-gray py-6">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Image src="/Frame 7.png" alt="Logo" width={40} height={40} />
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard Admin</h1>
-            <p className="text-gray-700">Selamat datang, <b>{user!.nama}</b> ({user.nip})</p>
-          </div>
-        </div>
+  // --- RENDER CONTENT --- //
+  const renderContent = () => {
+    switch (activeSection) {
+      case "dashboard":
+        return (
+          <>
+            {/* --- STATISTIK --- */}
+            <div className="grid grid-cols-2 gap-4 mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+              <div className="bg-white p-4 rounded shadow">
+                <div className="text-gray-500 text-sm">Total Pesanan</div>
+                <div className="text-2xl font-bold">{totalOrder}</div>
+              </div>
+              <div className="bg-white p-4 rounded shadow">
+                <div className="text-gray-500 text-sm">Pesanan Selesai</div>
+                <div className="text-2xl font-bold">
+                  {orders.filter((o) => o.status === "selesai").length}
+                </div>
+              </div>
+              <div className="bg-white p-4 rounded shadow">
+                <div className="text-gray-500 text-sm">Pendapatan</div>
+                <div className="text-2xl font-bold">{formatRupiah(totalIncome)}</div>
+              </div>
+              <div className="bg-white p-4 rounded shadow">
+                <div className="text-gray-500 text-sm">Menu Terlaris</div>
+                <div className="text-lg font-bold">{bestMenu ? bestMenu.name : "-"}</div>
+              </div>
+            </div>
 
-        {/* --- STATISTIK --- */}
-        <div className="grid grid-cols-2 gap-4 mb-8 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+            {/* --- NOTIFIKASI STOK TIPIS --- */}
+            {stokWarning.length > 0 && (
+              <div className="bg-yellow-100 text-yellow-900 border border-yellow-200 rounded px-4 py-2 mb-4">
+                <b>Perhatian!</b> Menu berikut stoknya menipis:{" "}
+                {stokWarning.map(m => m.name).join(", ")}
+              </div>
+            )}
+          </>
+        );
+
+      case "users":
+        return (
           <div className="bg-white p-4 rounded shadow">
-            <div className="text-gray-500 text-sm">Total Pesanan</div>
-            <div className="text-2xl font-bold">{totalOrder}</div>
-          </div>
-          <div className="bg-white p-4 rounded shadow">
-            <div className="text-gray-500 text-sm">Pesanan Selesai</div>
-            <div className="text-2xl font-bold">
-              {orders.filter((o) => o.status === "selesai").length}
+            <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+              <h2 className="font-bold text-lg">Akun Penjual</h2>
+              <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
+                onClick={() => handleOpenAddUser("penjual")}>+ Tambah Penjual</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-2 px-3 border">Nama</th>
+                    <th className="py-2 px-3 border">NIP</th>
+                    <th className="py-2 px-3 border">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {penjualList.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="py-6 text-gray-400 text-center">Tidak ada akun penjual.</td>
+                    </tr>
+                  )}
+                  {penjualList.map(u => (
+                    <tr key={u.id} className="border-t hover:bg-gray-50">
+                      <td className="py-2 px-3 border">{u.nama}</td>
+                      <td className="py-2 px-3 border">{u.nip}</td>
+                      <td className="py-2 px-3 border">
+                        <button className="text-blue-600 hover:underline mr-2" onClick={() => handleOpenEditUser("penjual", u)}>Edit</button>
+                        <button className="text-red-600 hover:underline" onClick={() => handleDeleteUser(u.id)}>Hapus</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
+        );
+
+      case "categories":
+        return (
           <div className="bg-white p-4 rounded shadow">
-            <div className="text-gray-500 text-sm">Pendapatan</div>
-            <div className="text-2xl font-bold">{formatRupiah(totalIncome)}</div>
+            <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+              <h2 className="font-bold text-lg">Kategori Menu</h2>
+              <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
+                onClick={handleAddCategory}>+ Tambah Kategori</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-2 px-3 border">Value</th>
+                    <th className="py-2 px-3 border">Label</th>
+                    <th className="py-2 px-3 border">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {categories.length === 0 && (
+                    <tr>
+                      <td colSpan={3} className="py-6 text-gray-400 text-center">Tidak ada kategori.</td>
+                    </tr>
+                  )}
+                  {categories.map(c => (
+                    <tr key={c.value} className="border-t hover:bg-gray-50">
+                      <td className="py-2 px-3 border">{c.value}</td>
+                      <td className="py-2 px-3 border">{c.label}</td>
+                      <td className="py-2 px-3 border">
+                        <button className="text-blue-600 hover:underline mr-2" onClick={() => handleEditCategory(c)}>Edit</button>
+                        <button className="text-red-600 hover:underline" onClick={() => handleDeleteCategory(c.value)} disabled={["mains", "drinks"].includes(c.value)}>Hapus</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
+        );
+
+      case "menus":
+        return (
           <div className="bg-white p-4 rounded shadow">
-            <div className="text-gray-500 text-sm">Menu Terlaris</div>
-            <div className="text-lg font-bold">{bestMenu ? bestMenu.name : "-"}</div>
-          </div>
-        </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mb-4">
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-500 mb-1">Penjual:</label>
+                <select
+                  className="border rounded px-2 py-1"
+                  value={selectedSeller}
+                  onChange={e =>
+                    setSelectedSeller(e.target.value === "all" ? "all" : Number(e.target.value))
+                  }
+                >
+                  <option value="all">Semua Penjual</option>
+                  {penjualList.map(p => (
+                    <option key={p.id} value={p.id}>{p.nama}</option>
+                  ))}
+                </select>
+              </div>
 
-        {/* --- NOTIFIKASI STOK TIPIS --- */}
-        {stokWarning.length > 0 && (
-          <div className="bg-yellow-100 text-yellow-900 border border-yellow-200 rounded px-4 py-2 mb-4">
-            <b>Perhatian!</b> Menu berikut stoknya menipis:{" "}
-            {stokWarning.map(m => m.name).join(", ")}
-          </div>
-        )}
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-500 mb-1">Kategori:</label>
+                <select
+                  className="border rounded px-2 py-1"
+                  value={selectedCategory}
+                  onChange={e => setSelectedCategory(e.target.value)}
+                >
+                  <option value="all">Semua</option>
+                  {categories.map(c => (
+                    <option key={c.value} value={c.value}>{c.label}</option>
+                  ))}
+                </select>
+              </div>
 
-        {/* --- DATA AKUN PENJUAL --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-            <h2 className="font-bold text-lg">Akun Penjual</h2>
-            <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
-              onClick={() => handleOpenAddUser("penjual")}>+ Tambah Penjual</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border">
-              <thead>
-                <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">Nama</th>
-                  <th className="py-2 px-3 border">NIP</th>
-                  <th className="py-2 px-3 border">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {penjualList.length === 0 && (
-                  <tr>
-                    <td colSpan={3} className="py-6 text-gray-400 text-center">Tidak ada akun penjual.</td>
-                  </tr>
-                )}
-                {penjualList.map(u => (
-                  <tr key={u.id} className="border-t hover:bg-gray-50">
-                    <td className="py-2 px-3 border">{u.nama}</td>
-                    <td className="py-2 px-3 border">{u.nip}</td>
-                    <td className="py-2 px-3 border">
-                      <button className="text-blue-600 hover:underline mr-2" onClick={() => handleOpenEditUser("penjual", u)}>Edit</button>
-                      <button className="text-red-600 hover:underline" onClick={() => handleDeleteUser(u.id)}>Hapus</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-500 mb-1">Cari Menu:</label>
+                <input
+                  className="border px-2 py-1 rounded"
+                  placeholder="Cari menu"
+                  value={searchMenu}
+                  onChange={e => setSearchMenu(e.target.value)}
+                />
+              </div>
+            </div>
 
-        {/* --- KATEGORI --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-            <h2 className="font-bold text-lg">Kategori Menu</h2>
-            <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
-              onClick={handleAddCategory}>+ Tambah Kategori</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border">
-              <thead>
-                <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">Value</th>
-                  <th className="py-2 px-3 border">Label</th>
-                  <th className="py-2 px-3 border">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {categories.length === 0 && (
-                  <tr>
-                    <td colSpan={3} className="py-6 text-gray-400 text-center">Tidak ada kategori.</td>
-                  </tr>
-                )}
-                {categories.map(c => (
-                  <tr key={c.value} className="border-t hover:bg-gray-50">
-                    <td className="py-2 px-3 border">{c.value}</td>
-                    <td className="py-2 px-3 border">{c.label}</td>
-                    <td className="py-2 px-3 border">
-                      <button className="text-blue-600 hover:underline mr-2" onClick={() => handleEditCategory(c)}>Edit</button>
-                      <button className="text-red-600 hover:underline" onClick={() => handleDeleteCategory(c.value)} disabled={["mains", "drinks"].includes(c.value)}>Hapus</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* --- DAFTAR MENU --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-500 mb-1">Penjual:</label>
-            <select
-              className="border rounded px-2 py-1"
-              value={selectedSeller}
-              onChange={e =>
-                setSelectedSeller(e.target.value === "all" ? "all" : Number(e.target.value))
-              }
-            >
-              <option value="all">Semua Penjual</option>
-              {penjualList.map(p => (
-                <option key={p.id} value={p.id}>{p.nama}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-500 mb-1">Kategori:</label>
-            <select
-              className="border rounded px-2 py-1"
-              value={selectedCategory}
-              onChange={e => setSelectedCategory(e.target.value)}
-            >
-              <option value="all">Semua</option>
-              {categories.map(c => (
-                <option key={c.value} value={c.value}>{c.label}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm text-gray-500 mb-1">Cari Menu:</label>
-            <input
-              className="border px-2 py-1 rounded"
-              placeholder="Cari menu"
-              value={searchMenu}
-              onChange={e => setSearchMenu(e.target.value)}
-            />
-          </div>
-
-
-        
-            <div className="flex gap-2">
+            <div className="flex gap-2 mb-4">
               <button className="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600"
                 onClick={handleAddMenu}
                 disabled={penjualList.length === 0}
@@ -608,263 +674,361 @@ export default function AdminPage() {
               <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
                 onClick={handleExportMenus}>Export Menu CSV</button>
             </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border">
-              <thead>
-                <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">Gambar</th>
-                  <th className="py-2 px-3 border">Nama</th>
-                  <th className="py-2 px-3 border">Penjual</th>
-                  <th className="py-2 px-3 border">Kategori</th>
-                  <th className="py-2 px-3 border">Harga</th>
-                  <th className="py-2 px-3 border">Stok</th>
-                  <th className="py-2 px-3 border">Last Edit</th>
-                  <th className="py-2 px-3 border">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pagedMenus.length === 0 && (
-                  <tr>
-                    <td colSpan={8} className="py-6 text-gray-400 text-center">Tidak ada menu.</td>
-                  </tr>
-                )}
-                {pagedMenus.map(menu => (
-                  <tr key={menu.id} className="border-t hover:bg-gray-50">
-                    <td className="py-2 px-3 border">
-                      <Image src={menu.image} alt={menu.name} width={56} height={40} className="rounded object-cover" />
-                    </td>
-                    <td className="py-2 px-3 border">{menu.name}</td>
-                    <td className="py-2 px-3 border">
-                      {penjualList.find(p => p.id === menu.sellerId)?.nama || "-"}
-                    </td>
-                    <td className="py-2 px-3 border capitalize">
-                      {categories.find(c => c.value === menu.category)?.label || menu.category}
-                    </td>
-                    <td className="py-2 px-3 border">{formatRupiah(menu.price)}</td>
-                    <td className="py-2 px-3 border">{menu.stok}</td>
-                    <td className="py-2 px-3 border text-xs">
-                      {menu.updatedAt ? new Date(menu.updatedAt).toLocaleString() : "-"}<br />
-                      <span className="text-gray-500">{menu.updatedBy || ""}</span>
-                    </td>
-                    <td className="py-2 px-3 border">
-                      <button className="text-blue-600 hover:underline mr-2" onClick={() => handleEditMenu(menu)}>Edit</button>
-                      <button className="text-red-600 hover:underline mr-2" onClick={() => handleDeleteMenu(menu.id!)}>Hapus</button>
-                      <button className="text-orange-600 hover:underline" onClick={() => handleDuplicateMenu(menu)}>Duplikat</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {menuPageCount > 1 && (
-            <div className="flex justify-center mt-2 gap-1">
-              {Array.from({ length: menuPageCount }, (_, i) => (
-                <button key={i} className={`px-2 py-1 rounded ${menuPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                  onClick={() => setMenuPage(i + 1)}>{i + 1}</button>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* --- MONITORING PESANAN --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-            <div className="flex items-center gap-2">
-              <h2 className="font-bold text-lg">Pesanan Masuk</h2>
-              <span className="text-gray-400">Status:</span>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-2 px-3 border">Gambar</th>
+                    <th className="py-2 px-3 border">Nama</th>
+                    <th className="py-2 px-3 border">Penjual</th>
+                    <th className="py-2 px-3 border">Kategori</th>
+                    <th className="py-2 px-3 border">Harga</th>
+                    <th className="py-2 px-3 border">Stok</th>
+                    <th className="py-2 px-3 border">Last Edit</th>
+                    <th className="py-2 px-3 border">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pagedMenus.length === 0 && (
+                    <tr>
+                      <td colSpan={8} className="py-6 text-gray-400 text-center">Tidak ada menu.</td>
+                    </tr>
+                  )}
+                  {pagedMenus.map(menu => (
+                    <tr key={menu.id} className="border-t hover:bg-gray-50">
+                      <td className="py-2 px-3 border">
+                        <Image src={menu.image} alt={menu.name} width={56} height={40} className="rounded object-cover" />
+                      </td>
+                      <td className="py-2 px-3 border">{menu.name}</td>
+                      <td className="py-2 px-3 border">
+                        {penjualList.find(p => p.id === menu.sellerId)?.nama || "-"}
+                      </td>
+                      <td className="py-2 px-3 border capitalize">
+                        {categories.find(c => c.value === menu.category)?.label || menu.category}
+                      </td>
+                      <td className="py-2 px-3 border">{formatRupiah(menu.price)}</td>
+                      <td className="py-2 px-3 border">{menu.stok}</td>
+                      <td className="py-2 px-3 border text-xs">
+                        {menu.updatedAt ? new Date(menu.updatedAt).toLocaleString() : "-"}<br />
+                        <span className="text-gray-500">{menu.updatedBy || ""}</span>
+                      </td>
+                      <td className="py-2 px-3 border">
+                        <button className="text-blue-600 hover:underline mr-2" onClick={() => handleEditMenu(menu)}>Edit</button>
+                        <button className="text-red-600 hover:underline mr-2" onClick={() => handleDeleteMenu(menu.id!)}>Hapus</button>
+                        <button className="text-orange-600 hover:underline" onClick={() => handleDuplicateMenu(menu)}>Duplikat</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {menuPageCount > 1 && (
+              <div className="flex justify-center mt-2 gap-1">
+                {Array.from({ length: menuPageCount }, (_, i) => (
+                  <button key={i} className={`px-2 py-1 rounded ${menuPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                    onClick={() => setMenuPage(i + 1)}>{i + 1}</button>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      case "orders":
+        return (
+          <div className="bg-white p-4 rounded shadow">
+            <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+              <div className="flex items-center gap-2">
+                <h2 className="font-bold text-lg">Pesanan Masuk</h2>
+                <span className="text-gray-400">Status:</span>
+                <select
+                  className="border rounded px-2 py-1"
+                  value={orderFilter}
+                  onChange={e => setOrderFilter(e.target.value)}
+                >
+                  <option value="all">Semua</option>
+                  <option value="baru">Baru</option>
+                  <option value="diproses">Diproses</option>
+                  <option value="selesai">Selesai</option>
+                </select>
+              </div>
+              <input
+                className="border px-2 py-1 rounded"
+                placeholder="Cari pesanan (ID, meja,)"
+                value={searchOrder}
+                onChange={e => setSearchOrder(e.target.value)}
+              />
+              <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
+                onClick={handleExportOrders}>Export Pesanan CSV</button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-2 px-3 border">NIP/NIM</th>
+                    <th className="py-2 px-3 border">Meja</th>
+                    <th className="py-2 px-3 border">Status</th>
+                    <th className="py-2 px-3 border">Waktu</th>
+                    <th className="py-2 px-3 border">Total</th>
+                    <th className="py-2 px-3 border">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {pagedOrders.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="py-6 text-gray-400 text-center">Tidak ada pesanan.</td>
+                    </tr>
+                  )}
+                  {pagedOrders.map(order => (
+                    <tr key={order.id} className="border-t hover:bg-gray-50">
+                      <td className="py-2 px-3 border">{order.id}</td>
+                      <td className="py-2 px-3 border">{order.table}</td>
+                      <td className="py-2 px-3 border">{order.status}</td>
+                      <td className="py-2 px-3 border">{new Date(order.createdAt).toLocaleString()}</td>
+                      <td className="py-2 px-3 border">
+                        {formatRupiah(order.items.reduce((t, i) => t + i.price * i.qty, 0))}
+                      </td>
+                      <td className="py-2 px-3 border">
+                        <button className="text-blue-600 hover:underline mr-2" onClick={() => setOrderModal(order)}>Detail</button>
+                        {order.status !== "selesai" && (
+                          <button className="text-green-600 hover:underline mr-2"
+                            onClick={() => {
+                              setOrders(orders => orders.map(o =>
+                                o.id === order.id
+                                  ? { ...o, status: "selesai", updatedBy: user!.nama, updatedAt: new Date().toISOString() }
+                                  : o
+                              ));
+                              setLogList(l => [`[${new Date().toLocaleString()}] Admin menandai pesanan #${order.id} selesai`, ...l]);
+                            }}
+                          >Tandai Selesai</button>
+                        )}
+                        <button className="text-red-600 hover:underline"
+                          onClick={() => {
+                            if (confirm("Batalkan pesanan?")) {
+                              setOrders(orders => orders.filter(o => o.id !== order.id));
+                              setLogList(l => [`[${new Date().toLocaleString()}] Admin membatalkan pesanan #${order.id}`, ...l]);
+                            }
+                          }}>Hapus</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {orderPageCount > 1 && (
+              <div className="flex justify-center mt-2 gap-1">
+                {Array.from({ length: orderPageCount }, (_, i) => (
+                  <button key={i} className={`px-2 py-1 rounded ${orderPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
+                    onClick={() => setOrderPage(i + 1)}>{i + 1}</button>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+
+      case "finance":
+        return (
+          <div className="bg-white p-4 rounded shadow">
+            <div className="flex items-center gap-2 mb-4">
+              <h2 className="font-bold text-lg">Rekap Keuangan Penjual</h2>
               <select
                 className="border rounded px-2 py-1"
-                value={orderFilter}
-                onChange={e => setOrderFilter(e.target.value)}
+                value={selectedFinanceSeller}
+                onChange={e => setSelectedFinanceSeller(e.target.value === "all" ? "all" : Number(e.target.value))}
               >
-                <option value="all">Semua</option>
-                <option value="baru">Baru</option>
-                <option value="diproses">Diproses</option>
-                <option value="selesai">Selesai</option>
+                {penjualOptions.map(p => (
+                  <option key={p.id} value={p.id}>{p.nama}</option>
+                ))}
               </select>
             </div>
-            <input
-              className="border px-2 py-1 rounded"
-              placeholder="Cari pesanan (ID, meja,)"
-              value={searchOrder}
-              onChange={e => setSearchOrder(e.target.value)}
-            />
-            <button className="bg-blue-500 text-white px-4 py-1 rounded hover:bg-blue-600"
-              onClick={handleExportOrders}>Export Pesanan CSV</button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border">
-              <thead>
-                <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">NIP/NIM</th>
-                  <th className="py-2 px-3 border">Meja</th>
-                  <th className="py-2 px-3 border">Status</th>
-                  <th className="py-2 px-3 border">Waktu</th>
-                  <th className="py-2 px-3 border">Total</th>
-                  <th className="py-2 px-3 border">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {pagedOrders.length === 0 && (
+            <div className="overflow-x-auto">
+              <table className="min-w-full border">
+                <thead>
+                  <tr className="bg-gray-100 text-left">
+                    <th className="py-2 px-3 border">Menu</th>
+                    <th className="py-2 px-3 border">Jumlah Terjual</th>
+                    <th className="py-2 px-3 border">Harga Satuan</th>
+                    <th className="py-2 px-3 border">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getFinanceData(selectedFinanceSeller).sales.length === 0 && (
+                    <tr><td colSpan={4} className="py-6 text-gray-400 text-center">Belum ada penjualan.</td></tr>
+                  )}
+                  {getFinanceData(selectedFinanceSeller).sales.map((s, idx) => (
+                    <tr key={idx} className="border-t hover:bg-gray-50">
+                      <td className="py-2 px-3 border">{s.name}</td>
+                      <td className="py-2 px-3 border">{s.qty}</td>
+                      <td className="py-2 px-3 border">{formatRupiah(s.price)}</td>
+                      <td className="py-2 px-3 border">{formatRupiah(s.total)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
                   <tr>
-                    <td colSpan={6} className="py-6 text-gray-400 text-center">Tidak ada pesanan.</td>
+                    <td className="py-2 px-3 border font-bold" colSpan={3}>Total Pendapatan</td>
+                    <td className="py-2 px-3 border font-bold">{formatRupiah(getFinanceData(selectedFinanceSeller).total)}</td>
                   </tr>
-                )}
-                {pagedOrders.map(order => (
-                  <tr key={order.id} className="border-t hover:bg-gray-50">
-                    <td className="py-2 px-3 border">{order.id}</td>
-                    <td className="py-2 px-3 border">{order.table}</td>
-                    <td className="py-2 px-3 border">{order.status}</td>
-                    <td className="py-2 px-3 border">{new Date(order.createdAt).toLocaleString()}</td>
-                    <td className="py-2 px-3 border">
-                      {formatRupiah(order.items.reduce((t, i) => t + i.price * i.qty, 0))}
-                    </td>
-                    <td className="py-2 px-3 border">
-                      <button className="text-blue-600 hover:underline mr-2" onClick={() => setOrderModal(order)}>Detail</button>
-                      {order.status !== "selesai" && (
-                        <button className="text-green-600 hover:underline mr-2"
-                          onClick={() => {
-                            setOrders(orders => orders.map(o =>
-                              o.id === order.id
-                                ? { ...o, status: "selesai", updatedBy: user!.nama, updatedAt: new Date().toISOString() }
-                                : o
-                            ));
-                            setLogList(l => [`[${new Date().toLocaleString()}] Admin menandai pesanan #${order.id} selesai`, ...l]);
-                          }}
-                        >Tandai Selesai</button>
-                      )}
-                      <button className="text-red-600 hover:underline"
-                        onClick={() => {
-                          if (confirm("Batalkan pesanan?")) {
-                            setOrders(orders => orders.filter(o => o.id !== order.id));
-                            setLogList(l => [`[${new Date().toLocaleString()}] Admin membatalkan pesanan #${order.id}`, ...l]);
-                          }
-                        }}>Hapus</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {orderPageCount > 1 && (
-            <div className="flex justify-center mt-2 gap-1">
-              {Array.from({ length: orderPageCount }, (_, i) => (
-                <button key={i} className={`px-2 py-1 rounded ${orderPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-200"}`}
-                  onClick={() => setOrderPage(i + 1)}>{i + 1}</button>
-              ))}
+                </tfoot>
+              </table>
             </div>
-          )}
-        </div>
-        {/* --- REKAP KEUANGAN PENJUAL (QRIS) --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex items-center gap-2 mb-4">
-            <h2 className="font-bold text-lg">Rekap Keuangan Penjual</h2>
-            <select
-              className="border rounded px-2 py-1"
-              value={selectedFinanceSeller}
-              onChange={e => setSelectedFinanceSeller(e.target.value === "all" ? "all" : Number(e.target.value))}
-            >
-              {penjualOptions.map(p => (
-                <option key={p.id} value={p.id}>{p.nama}</option>
-              ))}
-            </select>
           </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full border">
-              <thead>
-                <tr className="bg-gray-100 text-left">
-                  <th className="py-2 px-3 border">Menu</th>
-                  <th className="py-2 px-3 border">Jumlah Terjual</th>
-                  <th className="py-2 px-3 border">Harga Satuan</th>
-                  <th className="py-2 px-3 border">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {getFinanceData(selectedFinanceSeller).sales.length === 0 && (
-                  <tr><td colSpan={4} className="py-6 text-gray-400 text-center">Belum ada penjualan.</td></tr>
-                )}
-                {getFinanceData(selectedFinanceSeller).sales.map((s, idx) => (
-                  <tr key={idx} className="border-t hover:bg-gray-50">
-                    <td className="py-2 px-3 border">{s.name}</td>
-                    <td className="py-2 px-3 border">{s.qty}</td>
-                    <td className="py-2 px-3 border">{formatRupiah(s.price)}</td>
-                    <td className="py-2 px-3 border">{formatRupiah(s.total)}</td>
-                  </tr>
+        );
+
+      case "logs":
+        return (
+          <div className="bg-white p-4 rounded shadow">
+            <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
+              <h2 className="font-bold text-lg">Log Aktivitas</h2>
+            </div>
+            <div className="max-h-96 overflow-y-auto text-xs font-mono">
+              {logList.length === 0 && <div className="text-gray-400">Belum ada aktivitas.</div>}
+              <ul>
+                {logList.map((log, idx) => (
+                  <li key={idx} className="mb-1 p-2 bg-gray-50 rounded">{log}</li>
                 ))}
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td className="py-2 px-3 border font-bold" colSpan={3}>Total Pendapatan</td>
-                  <td className="py-2 px-3 border font-bold">{formatRupiah(getFinanceData(selectedFinanceSeller).total)}</td>
-                </tr>
-              </tfoot>
-            </table>
+              </ul>
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  // --- RENDER --- //
+  if (!user) return null;
+
+  return (
+    <div className="min-h-screen bg-green-400 flex">
+      {/* Mobile Menu Button */}
+      <button
+        className="lg:hidden fixed top-4 left-4 z-50 bg-blue-500 p-2 rounded-md shadow-md"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? <CloseIcon /> : <HamburgerIcon />}
+      </button>
+
+      {/* Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="flex items-center gap-3 p-6 border-b">
+          <Image src="/Frame 7.png" alt="Logo" width={32} height={32} />
+          <div>
+            <h1 className="text-lg font-bold">Admin Panel</h1>
+            <p className="text-sm text-gray-600">{user.nama}</p>
           </div>
         </div>
-        {/* --- RIWAYAT (LOG AKTIVITAS) --- */}
-        <div className="bg-white p-4 rounded shadow mb-8">
-          <div className="flex flex-wrap justify-between items-center mb-4 gap-2">
-            <h2 className="font-bold text-lg">Log Aktivitas</h2>
-          </div>
-          <div className="max-h-48 overflow-y-auto text-xs font-mono">
-            {logList.length === 0 && <div className="text-gray-400">Belum ada aktivitas.</div>}
-            <ul>
-              {logList.map((log, idx) => (
-                <li key={idx}>{log}</li>
-              ))}
-            </ul>
-          </div>
+
+        <nav className="mt-6">
+          {sidebarItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                setActiveSection(item.id);
+                setSidebarOpen(false); // Close sidebar on mobile after selection
+              }}
+              className={`w-full flex items-center gap-3 px-6 py-3 text-left hover:bg-gray-50 transition-colors ${
+                activeSection === item.id ? 'bg-blue-50 border-r-4 border-blue-500 text-blue-700' : 'text-gray-700'
+              }`}
+            >
+              <item.icon className={`w-5 h-5 ${activeSection === item.id ? 'text-blue-700' : 'text-gray-500'}`} />
+              <span className="font-medium">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="absolute bottom-0 left-0 right-0 p-6 border-t">
+          <button
+            onClick={() => {
+              localStorage.removeItem("user");
+              router.push("/login");
+            }}
+            className="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+          >
+            <LogoutIcon className="w-5 h-5" />
+            <span className="font-medium">Logout</span>
+          </button>
         </div>
-
-        {/* --- MODAL USER --- */}
-        {userModal && (
-          <UserModal
-            mode={userModal.mode}
-            data={userModal.data}
-            role={userModal.role}
-            onClose={() => setUserModal(null)}
-            onSave={handleSaveUser}
-          />
-        )}
-
-        {/* --- MODAL MENU --- */}
-        {menuModal && (
-          <MenuModal
-            mode={menuModal.mode}
-            data={menuModal.data}
-            penjualList={penjualList}
-            selectedSeller={selectedSeller}
-            categories={categories}
-            onClose={() => setMenuModal(null)}
-            onSave={handleSaveMenu}
-          />
-        )}
-
-        {/* --- MODAL KATEGORI --- */}
-        {categoryModal && (
-          <CategoryModal
-            mode={categoryModal.mode}
-            data={categoryModal.data}
-            onClose={() => setCategoryModal(null)}
-            onSave={handleSaveCategory}
-          />
-        )}
-
-        {/* --- MODAL DETAIL ORDER --- */}
-        {orderModal && (
-          <OrderModal
-            data={orderModal}
-            onClose={() => setOrderModal(null)}
-          />
-        )}
       </div>
+
+      {/* Overlay untuk mobile */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-blur bg-opacity-0 z-30 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 lg:ml-0">
+        <div className="p-6">
+          {/* Header */}
+          <div className="mb-8 lg:ml-0 ml-12">
+            <div className="flex items-center gap-4">
+              <div>
+                <h1 className="text-3xl font-bold">
+                  {sidebarItems.find(item => item.id === activeSection)?.label || "Dashboard"}
+                </h1>
+                <p className="text-gray-700">
+                  Selamat datang, <b>{user.nama}</b> ({user.nip})
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Content */}
+          {renderContent()}
+        </div>
+      </div>
+
+      {/* --- MODAL USER --- */}
+      {userModal && (
+        <UserModal
+          mode={userModal.mode}
+          data={userModal.data}
+          role={userModal.role}
+          onClose={() => setUserModal(null)}
+          onSave={handleSaveUser}
+        />
+      )}
+
+      {/* --- MODAL MENU --- */}
+      {menuModal && (
+        <MenuModal
+          mode={menuModal.mode}
+          data={menuModal.data}
+          penjualList={penjualList}
+          selectedSeller={selectedSeller}
+          categories={categories}
+          onClose={() => setMenuModal(null)}
+          onSave={handleSaveMenu}
+        />
+      )}
+
+      {/* --- MODAL KATEGORI --- */}
+      {categoryModal && (
+        <CategoryModal
+          mode={categoryModal.mode}
+          data={categoryModal.data}
+          onClose={() => setCategoryModal(null)}
+          onSave={handleSaveCategory}
+        />
+      )}
+
+      {/* --- MODAL DETAIL ORDER --- */}
+      {orderModal && (
+        <OrderModal
+          data={orderModal}
+          onClose={() => setOrderModal(null)}
+        />
+      )}
     </div>
   );
 }
 
 // --- MODAL: USER --- //
-function UserModal({ mode, data, role, onClose, onSave }:{
+function UserModal({ mode, data, role, onClose, onSave }: {
   mode: "add" | "edit",
   data?: UserPP,
   role: "pembeli" | "penjual",
@@ -885,19 +1049,19 @@ function UserModal({ mode, data, role, onClose, onSave }:{
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <form className="bg-white rounded p-6 w-full max-w-xs space-y-3" onSubmit={handleSubmit}>
-        <div className="font-bold text-lg mb-2">{mode==="add"?`Tambah ${role.charAt(0).toUpperCase()+role.slice(1)}`:`Edit ${role.charAt(0).toUpperCase()+role.slice(1)}`}</div>
+        <div className="font-bold text-lg mb-2">{mode === "add" ? `Tambah ${role.charAt(0).toUpperCase() + role.slice(1)}` : `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`}</div>
         {error && <div className="text-red-600">{error}</div>}
         <div>
           <label className="block mb-1 font-medium">Nama</label>
-          <input className="w-full border rounded px-2 py-1" value={nama} onChange={e=>setNama(e.target.value)} />
+          <input className="w-full border rounded px-2 py-1" value={nama} onChange={e => setNama(e.target.value)} />
         </div>
         <div>
           <label className="block mb-1 font-medium">NIP</label>
-          <input className="w-full border rounded px-2 py-1" value={nip} onChange={e=>setNip(e.target.value)} />
+          <input className="w-full border rounded px-2 py-1" value={nip} onChange={e => setNip(e.target.value)} />
         </div>
         <div className="flex justify-end gap-2 pt-2">
           <button type="button" className="px-4 py-1 rounded bg-gray-200" onClick={onClose}>Batal</button>
-          <button type="submit" className="px-4 py-1 rounded bg-green-500 text-white">{mode==="add"?"Tambah":"Simpan"}</button>
+          <button type="submit" className="px-4 py-1 rounded bg-green-500 text-white">{mode === "add" ? "Tambah" : "Simpan"}</button>
         </div>
       </form>
     </div>
@@ -961,7 +1125,7 @@ function MenuModal({ mode, data, penjualList, selectedSeller, categories, onClos
       return;
     }
     if (stok < 1) {
-      setError("Stok harus minipal 1!");
+      setError("Stok harus minimal 1!");
       return;
     }
     if (!imageFile && !imagePreview) {
@@ -996,7 +1160,7 @@ function MenuModal({ mode, data, penjualList, selectedSeller, categories, onClos
             ))}
           </select>
         </div>
-        <div>
+                <div>
           <label className="block mb-1 font-medium">Harga</label>
           <input
             type="text"

@@ -2,7 +2,7 @@
 
 /* ----------- COLOR ROOT ----------- */
 :root {
-  --background: #ede5e5;
+  --background: oklch(79.2% 0.209 151.711);
   --foreground: #444; 
 }
 
