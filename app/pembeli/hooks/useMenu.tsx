@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FoodItem } from "../types";
 import { foodItems } from "../data";
 
 export const useMenu = () => {
