@@ -107,7 +107,7 @@ body {
   z-index: 9999;
 }
 
-/* Optional: custom button style */
+
 .button {
   background-color: #53B175;
   color: #fff;
@@ -118,4 +118,37 @@ body {
 }
 .button:hover {
   background-color: #429c5d;
+}
+
+
+.food-card {
+  height: 100%;
+  min-height: 230px;
+}
+
+@media (max-width: 640px) {
+
+  .food-img {
+    height: 110px !important; 
+  }
+  
+  .food-card {
+    min-height: 200px; 
+  }
+  
+  .food-name {
+    font-size: 0.9rem !important; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  .food-price {
+    font-size: 0.85rem !important;
+  }
+  
+  .food-card-content {
+    padding: 0.5rem !important;
+  }
 }

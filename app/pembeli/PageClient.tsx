@@ -341,24 +341,22 @@ export default function PageClient() {
                 <p className="text-gray-500 col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-center py-8 bg-white rounded-lg shadow-sm">Tidak ada menu.</p>
               ) : (
                 filteredItems.map((item) => (
-                  <div 
-                    key={item.id} 
-                    className="food-card bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 flex flex-col"
-                  >
-                    <div className="relative">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        width={400}
-                        height={192}
-                        className="w-full h-48 object-cover food-img"
-                      />
-                      <div className="absolute bottom-0 right-0 bg-white px-2 py-1 m-2 rounded-md text-xs font-medium text-gray-600">
-                        {item.category}
+                  <div key={item.id} className="food-card bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 flex flex-col"
+                    >
+                      <div className="relative">
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={400}
+                          height={192}
+                          className="w-full h-32 sm:h-40 object-cover food-img"
+                        />
+                        <div className="absolute bottom-0 right-0 bg-white px-2 py-1 m-2 rounded-md text-xs font-medium text-gray-600">
+                          {item.category}
+                        </div>
                       </div>
-                    </div>
                     
-                    <div className="p-4 flex flex-col flex-1 food-card-content">
+                    <div className="p-3 flex flex-col flex-1 food-card-content">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-bold text-lg text-gray-800 food-name">{item.name}</h3>
                         <span className="text-green-500 font-bold food-price">{formatRupiah(item.price)}</span>
