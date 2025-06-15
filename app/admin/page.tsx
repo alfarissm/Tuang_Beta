@@ -72,6 +72,7 @@ export default function AdminPage() {
   const [logList, setLogList] = useState<string[]>([]);
   
   // Finance report state
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedFinanceSeller, setSelectedFinanceSeller] = useState<number | "all">("all");
 
   // Add log helper function
