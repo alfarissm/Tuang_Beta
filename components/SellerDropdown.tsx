@@ -59,7 +59,7 @@ export default function SellerDropdown({
                 setOpen(false);
               }}
               type="button"
-              aria-selected={selectedSeller === s.id}
+              aria-pressed={selectedSeller === s.id}
               tabIndex={0}
             >
               {s.nama}

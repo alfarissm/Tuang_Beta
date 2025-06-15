@@ -33,7 +33,7 @@ export default function PembayaranPage() {
   };
 
   return (
-    <OrderLayout title="Pembayaran" compact>
+    <OrderLayout title="Pembayaran">
       <div className="space-y-3">
         {/* Customer Info - Compact Version */}
         <div className="bg-gray-50 rounded-lg p-3">
