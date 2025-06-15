@@ -437,14 +437,21 @@ export default function AdminPage() {
               onCloseModal={() => setOrderModal(null)}
             />
           )}
-
           {activeSection === "finance" && (
             <FinanceReport
-              menus={menus}
               orders={orders}
-              penjualList={penjualList}
-              selectedFinanceSeller={selectedFinanceSeller}
-              onSellerChange={(value) => setSelectedFinanceSeller(value === "all" ? "all" : Number(value))}
+              dateFilter={{ start: '', end: '' }}
+              financeData={[]}
+              onDateFilterChange={(field, value) => {
+                console.log(`Date filter changed: ${field} = ${value}`);
+              }}
+              onGenerateReport={() => {
+                console.log("Generate report clicked");
+              }}
+              onExportFinanceCSV={() => {
+                console.log("Export CSV clicked");
+              }}
+              bestSellerData={[]}
             />
           )}
 
