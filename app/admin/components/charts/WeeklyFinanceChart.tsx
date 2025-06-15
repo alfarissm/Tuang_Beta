@@ -40,14 +40,6 @@ interface WeeklyRevenueData {
   revenue: number[];
 }
 
-interface TooltipItem {
-  raw: number;
-  datasetIndex: number;
-  dataIndex: number;
-  dataset: {
-    data: number[];
-  };
-}
 
 export const WeeklyFinanceChart: React.FC<WeeklyFinanceChartProps> = ({ orders }) => {
   // Helper function to get week number
@@ -181,8 +173,8 @@ export const WeeklyFinanceChart: React.FC<WeeklyFinanceChartProps> = ({ orders }
       },
       tooltip: {
         callbacks: {
-          label: function(context: TooltipItem) {
-            return `Pendapatan: ${formatRupiah(context.raw)}`;
+          label: function(context) {
+            return `Pendapatan: ${formatRupiah(context.raw as number)}`;
           }
         }
       }
@@ -191,8 +183,8 @@ export const WeeklyFinanceChart: React.FC<WeeklyFinanceChartProps> = ({ orders }
       y: {
         beginAtZero: true,
         ticks: {
-          callback: function(value: number) {
-            return formatRupiah(value);
+          callback: function(value) {
+            return formatRupiah(value as number);
           }
         }
       }
