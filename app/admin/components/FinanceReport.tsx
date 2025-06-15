@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Order } from '../types';
 import { formatRupiah } from '../utils/formatting';
 import { WeeklyFinanceChart } from '../components/charts/WeeklyFinanceChart';
-import { initialOrders, initialMenus, initialUsers } from '../data/mockData';
+import { initialOrders, initialUsers } from '../data/mockData';
 
 interface FinanceReportProps {
   orders: Order[];
@@ -313,7 +313,7 @@ export const FinanceReport: React.FC<FinanceReportProps> = ({
           
           {/* Mobile card view for seller distribution (visible on small screens only) */}
           <div className="md:hidden space-y-3">
-            {sellerFinanceData.length > 0 ? sellerFinanceData.map((seller, i) => (
+            {sellerFinanceData.length > 0 ? sellerFinanceData.map((seller) => (
               <div key={seller.sellerId} className="p-3 bg-gray-50 border rounded">
                 <div className="flex justify-between items-center">
                   <div className="font-medium text-gray-800">{seller.sellerName}</div>
@@ -462,7 +462,7 @@ export const FinanceReport: React.FC<FinanceReportProps> = ({
                   if (formattedDate === "Invalid Date") {
                     formattedDate = data?.date || `Data #${index + 1}`;
                   }
-                } catch (e) {
+                } catch (_) {
                   formattedDate = data?.date || `Data #${index + 1}`;
                 }
                 
@@ -512,7 +512,7 @@ export const FinanceReport: React.FC<FinanceReportProps> = ({
                       if (formattedDate === "Invalid Date") {
                         formattedDate = data?.date || `Data #${index + 1}`;
                       }
-                    } catch (e) {
+                    } catch (_) {
                       formattedDate = data?.date || `Data #${index + 1}`;
                     }
                     

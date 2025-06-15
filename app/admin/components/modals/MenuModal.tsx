@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MenuModalProps, User } from '@/app/admin/types/index';
+import { MenuModalProps,  } from '@/app/admin/types/index';
 import Image from 'next/image';
 
 export const MenuModal: React.FC<MenuModalProps> = ({ 

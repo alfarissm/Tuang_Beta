@@ -23,14 +23,13 @@ interface OrderManagementProps {
 }
 
 export const OrderManagement: React.FC<OrderManagementProps> = ({
-  orders,
   pagedOrders,
   orderPage,
   orderPageCount,
   orderFilter,
   searchOrder,
   orderModal,
-  user,
+
   onFilterChange,
   onSearchChange,
   onViewOrderDetail,

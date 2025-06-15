@@ -29,7 +29,7 @@ interface MenuManagementProps {
 }
 
 export const MenuManagement: React.FC<MenuManagementProps> = ({
-  menus,
+
   penjualList,
   categories,
   selectedSeller,
