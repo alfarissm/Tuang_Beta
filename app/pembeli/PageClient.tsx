@@ -105,8 +105,10 @@ export default function PageClient() {
 
   const handleIncrease = (id: number, note?: string) =>
     setCart(c => c.map(i => i.id === id && i.note === note ? { ...i, quantity: i.quantity + 1 } : i));
+  
   const handleDecrease = (id: number, note?: string) =>
     setCart(c => c.map(i => i.id === id && i.note === note ? { ...i, quantity: i.quantity > 1 ? i.quantity - 1 : 1 } : i));
+  
   const handleRemove = (id: number, note?: string) =>
     setCart(c => c.filter(i => !(i.id === id && i.note === note)));
 
@@ -140,6 +142,7 @@ export default function PageClient() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         {/* Responsive extra styles */}
         <style>{`
+          /* Badge Styling */
           .cart-badge {
             position: absolute;
             top: -6px;
@@ -155,6 +158,8 @@ export default function PageClient() {
             justify-content: center;
             font-weight: 700;
           }
+          
+          /* Drawer Animation */
           .drawer.closed {
             display: none !important;
           }
@@ -166,30 +171,50 @@ export default function PageClient() {
             from { right: -100vw; }
             to   { right: 0; }
           }
+          
+          /* Food Card Styling */
+          .food-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+          }
+          .food-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+          }
+          
+          /* Category Button Styling */
+          .category-btn {
+            transition: all 0.2s;
+          }
+          .category-btn:hover:not(.active) {
+            background-color: #f3f4f6;
+          }
+          
+          /* Responsive Adaptations */
           @media (max-width: 768px) {
             .drawer {
               width: 100vw !important;
               max-width: 100vw !important;
               min-width: 0 !important;
             }
-            .food-card {
-              min-width: 0 !important;
-              width: 100% !important;
-            }
-            .category-btn {
-              font-size: 0.85rem;
-              padding: 0.25rem 0.75rem;
-            }
             .cart-item {
               flex-direction: column;
               align-items: flex-start;
               gap: 8px;
             }
-          }
-          @media (max-width: 500px) {
-            .food-card {
-              padding: 0 !important;
+            .category-btn {
+              font-size: 0.85rem;
+              padding: 0.25rem 0.75rem;
             }
+            /* Maintain height proportion on small screens */
+            .food-img {
+              height: 140px !important;
+            }
+            .food-card-content {
+              padding: 0.75rem !important;
+            }
+          }
+          
+          @media (max-width: 500px) {
             .drawer {
               padding: 0 !important;
             }
@@ -202,9 +227,24 @@ export default function PageClient() {
               font-size: 0.80rem;
               padding: 0.2rem 0.5rem;
             }
+            /* Make food cards more compact on very small screens */
+            .food-img {
+              height: 120px !important;
+            }
+            .food-name {
+              font-size: 0.95rem !important;
+            }
+            .food-price {
+              font-size: 0.9rem !important;
+            }
+            .food-card-content {
+              padding: 0.6rem !important;
+            }
           }
         `}</style>
       </Head>
+      
+      {/* Header Section */}
       <header className="bg-white shadow-sm sticky top-0 z-10">
         <div className="container mx-auto px-2 sm:px-4 py-3 flex justify-between items-center">
           {/* Logo */}
@@ -212,7 +252,8 @@ export default function PageClient() {
             <Image src="/Frame 7.png" alt="Logo" className="h-10 w-auto mr-1" width={50} height={50} />
             <h1 className="text-lg font-bold text-gray-800">Tuang</h1>
           </div>
-          {/* Search bar */}
+          
+          {/* Search bar & Cart Icon */}
           <div className="flex items-center space-x-2 sm:space-x-4">
             <div className="relative w-28 sm:w-48 md:w-64 lg:w-80 transition-all duration-300">
               <input
@@ -224,8 +265,12 @@ export default function PageClient() {
               />
               <i className="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
+            
             <div className="relative">
-              <button className="relative p-2 text-gray-700 hover:text-green-500" onClick={toggleCartDrawer}>
+              <button 
+                className="relative p-2 text-gray-700 hover:text-green-500 transition-colors" 
+                onClick={toggleCartDrawer}
+              >
                 <i className="fas fa-shopping-cart text-xl"></i>
                 {cart.length > 0 && (
                   <span className="cart-badge">{cart.reduce((a, c) => a + c.quantity, 0)}</span>
@@ -237,7 +282,7 @@ export default function PageClient() {
       </header>
 
       <main className="container mx-auto px-1 sm:px-4 py-4 sm:py-6">
-        {/* Modal input meja */}
+        {/* Table Number Modal */}
         {manualModalVisible && (
           <div className="fixed inset-0 bg-green-400 bg-opacity-80 flex items-center justify-center z-50 px-4">
             <div className="bg-white rounded-2xl shadow-lg p-6 w-full max-w-md text-center">
@@ -246,13 +291,13 @@ export default function PageClient() {
               <input
                 type="text"
                 placeholder="Nomor meja"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring focus:border-green-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:border-green-500"
                 value={tableNumber}
                 onChange={e => setTableNumber(e.target.value)}
               />
 
               <button
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded transition"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition-colors"
                 onClick={handleConfirmTable}
               >
                 Konfirmasi
@@ -263,7 +308,8 @@ export default function PageClient() {
 
         {currentTable && (
           <>
-            <div className="flex flex-wrap gap-2 mb-6 items-center">
+            {/* Filter Section */}
+            <div className="flex flex-wrap gap-2 mb-6 items-center bg-white p-3 rounded-lg shadow-sm">
               <SellerDropdown
                 sellerOptions={sellerOptions}
                 selectedSeller={selectedSeller}
@@ -272,7 +318,7 @@ export default function PageClient() {
               <div className="flex flex-wrap gap-1 sm:gap-2">
                 <button
                   key="all"
-                  className={`category-btn px-4 py-1 rounded-full border border-gray-300 ${selectedCategory === "all" ? "active bg-[#53B175] text-white" : ""}`}
+                  className={`category-btn px-4 py-1 rounded-full border ${selectedCategory === "all" ? "active bg-[#53B175] text-white border-[#53B175]" : "border-gray-300 hover:bg-gray-50"}`}
                   onClick={() => setSelectedCategory("all")}
                 >
                   Semua Kategori
@@ -280,7 +326,7 @@ export default function PageClient() {
                 {categories.map((cat) => (
                   <button
                     key={cat}
-                    className={`category-btn px-4 py-1 rounded-full border border-white ${selectedCategory === cat ? "active bg-[#53B175] text-white" : ""}`}
+                    className={`category-btn px-4 py-1 rounded-full border ${selectedCategory === cat ? "active bg-[#53B175] text-white border-[#53B175]" : "border-gray-200 hover:bg-gray-50"}`}
                     onClick={() => setSelectedCategory(cat)}
                   >
                     {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -288,32 +334,48 @@ export default function PageClient() {
                 ))}
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            
+            {/* Menu Grid - Updated to show 2x2 grid on mobile */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               {filteredItems.length === 0 ? (
-                <p className="text-gray-500 col-span-3 text-center py-8">Tidak ada menu.</p>
+                <p className="text-gray-500 col-span-2 sm:col-span-2 md:col-span-2 lg:col-span-3 text-center py-8 bg-white rounded-lg shadow-sm">Tidak ada menu.</p>
               ) : (
                 filteredItems.map((item) => (
-                  <div key={item.id} className="food-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 flex flex-col">
-                    <Image
-                      src={item.image}
-                      alt={item.name}
-                      width={400}
-                      height={192}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="p-4 flex flex-col flex-1">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-bold text-lg">{item.name}</h3>
-                        <span className="text-green-500 font-bold">{formatRupiah(item.price)}</span>
+                  <div 
+                    key={item.id} 
+                    className="food-card bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 flex flex-col"
+                  >
+                    <div className="relative">
+                      <Image
+                        src={item.image}
+                        alt={item.name}
+                        width={400}
+                        height={192}
+                        className="w-full h-48 object-cover food-img"
+                      />
+                      <div className="absolute bottom-0 right-0 bg-white px-2 py-1 m-2 rounded-md text-xs font-medium text-gray-600">
+                        {item.category}
                       </div>
-                      <div className="text-sm text-gray-500 mb-1">
+                    </div>
+                    
+                    <div className="p-4 flex flex-col flex-1 food-card-content">
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-bold text-lg text-gray-800 food-name">{item.name}</h3>
+                        <span className="text-green-500 font-bold food-price">{formatRupiah(item.price)}</span>
+                      </div>
+                      
+                      <div className="text-sm text-gray-500 mb-3">
+                        <i className="fas fa-store text-xs mr-1"></i>
                         {sellers.find(s => s.id === item.sellerId)?.nama}
                       </div>
+                      
                       <button
-                        className="add-to-cart w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-medium mt-auto"
+                        className="add-to-cart w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg font-medium mt-auto transition-colors flex items-center justify-center gap-2"
                         onClick={() => handleAddToCart(item)}
                       >
-                        Tambah ke Keranjang
+                        <i className="fas fa-plus text-xs"></i>
+                        <span className="sm:inline hidden">Tambah ke Keranjang</span>
+                        <span className="inline sm:hidden">Tambah</span>
                       </button>
                     </div>
                   </div>
@@ -324,30 +386,35 @@ export default function PageClient() {
         )}
       </main>
 
+      {/* Note Modal */}
       {noteModalVisible && (
-      <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="bg-white backdrop-blur-md rounded-lg p-6 w-full max-w-xs shadow-xl">
-          <h4 className="font-bold mb-2">Pesan/Catatan untuk {selectedFoodForNote?.name}</h4>
-          <textarea
-            className="w-full border rounded px-3 py-2 mb-4"
-            placeholder="Contoh: Tanpa bawang, level 2, dsb (opsional)"
-            rows={3}
-            value={noteValue}
-            onChange={e => setNoteValue(e.target.value)}
-          />
-          <div className="flex justify-end gap-2">
-            <button
-              className="px-4 py-1 rounded bg-gray-200"
-              onClick={() => setNoteModalVisible(false)}
-            >Batal</button>
-            <button
-              className="px-4 py-1 rounded bg-green-500 text-white"
-              onClick={handleSubmitNote}
-            >Tambah</button>
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white backdrop-blur-md rounded-lg p-6 w-full max-w-xs shadow-xl">
+            <h4 className="font-bold mb-2">Pesan/Catatan untuk {selectedFoodForNote?.name}</h4>
+            <textarea
+              className="w-full border rounded px-3 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+              placeholder="Contoh: Tanpa bawang, level 2, dsb (opsional)"
+              rows={3}
+              value={noteValue}
+              onChange={e => setNoteValue(e.target.value)}
+            />
+            <div className="flex justify-end gap-2">
+              <button
+                className="px-4 py-1 rounded bg-gray-200 hover:bg-gray-300 transition-colors"
+                onClick={() => setNoteModalVisible(false)}
+              >
+                Batal
+              </button>
+              <button
+                className="px-4 py-1 rounded bg-green-500 text-white hover:bg-green-600 transition-colors"
+                onClick={handleSubmitNote}
+              >
+                Tambah
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )}
 
       {/* Cart Drawer */}
       <div
@@ -355,63 +422,78 @@ export default function PageClient() {
         style={{ display: cartDrawerOpen ? "block" : "none" }}
       >
         <div className="p-4">
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold">Pesanan Anda</h3>
-            <button className="text-gray-500 hover:text-gray-700" onClick={toggleCartDrawer}>
+          <div className="flex justify-between items-center mb-6 border-b pb-4">
+            <h3 className="text-xl font-bold text-gray-800">Pesanan Anda</h3>
+            <button className="text-gray-500 hover:text-gray-700 p-1" onClick={toggleCartDrawer}>
               <i className="fas fa-times"></i>
             </button>
           </div>
-          <div className="mb-4">
+          
+          <div className="mb-4 overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
             {cart.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
-                <i className="fas fa-shopping-cart text-4xl mb-2"></i>
+                <i className="fas fa-shopping-cart text-4xl mb-3 opacity-50"></i>
                 <p>Keranjang kosong</p>
               </div>
             ) : (
               cart.map((item) => (
-                <div key={item.id + (item.note ?? "")} className="cart-item flex justify-between items-center p-3 mb-2 rounded-lg border border-gray-100">
+                <div 
+                  key={item.id + (item.note ?? "")} 
+                  className="cart-item flex justify-between items-center p-3 mb-3 rounded-lg border border-gray-100 bg-white shadow-sm"
+                >
                   <div className="flex-1">
-                    <h4 className="font-medium">{item.name}</h4>
+                    <h4 className="font-medium text-gray-800">{item.name}</h4>
                     <p className="text-gray-500 text-sm">{formatRupiah(item.price)} / porsi</p>
-                    {item.note && <div className="text-xs text-gray-500 italic">Note: {item.note}</div>}
-                    <div className="text-xs text-gray-400">
-                      Penjual: {sellers.find(s => s.id === item.sellerId)?.nama}
+                    {item.note && <div className="text-xs text-gray-500 italic mt-1">Note: {item.note}</div>}
+                    <div className="text-xs text-gray-400 mt-1">
+                      <i className="fas fa-store mr-1"></i>
+                      {sellers.find(s => s.id === item.sellerId)?.nama}
                     </div>
                   </div>
+                  
                   <div className="flex items-center">
+                    <div className="flex items-center border border-gray-200 rounded-md">
+                      <button
+                        className="decrease-quantity px-2 py-1 text-gray-500 hover:text-green-500 hover:bg-gray-50"
+                        onClick={() => handleDecrease(item.id, item.note)}
+                      >
+                        <i className="fas fa-minus text-xs"></i>
+                      </button>
+                      <span className="mx-2 w-8 text-center font-medium">{item.quantity}</span>
+                      <button
+                        className="increase-quantity px-2 py-1 text-gray-500 hover:text-green-500 hover:bg-gray-50"
+                        onClick={() => handleIncrease(item.id, item.note)}
+                      >
+                        <i className="fas fa-plus text-xs"></i>
+                      </button>
+                    </div>
                     <button
-                      className="decrease-quantity px-2 text-gray-500 hover:text-green-500"
-                      onClick={() => handleDecrease(item.id, item.note)}
-                    >
-                      <i className="fas fa-minus"></i>
-                    </button>
-                    <span className="mx-2 w-8 text-center">{item.quantity}</span>
-                    <button
-                      className="increase-quantity px-2 text-gray-500 hover:text-green-500"
-                      onClick={() => handleIncrease(item.id, item.note)}
-                    >
-                      <i className="fas fa-plus"></i>
-                    </button>
-                    <button
-                      className="remove-item ml-4 text-red-500 hover:text-red-700"
+                      className="remove-item ml-3 p-1 text-red-500 hover:text-red-700"
                       onClick={() => handleRemove(item.id, item.note)}
                     >
-                      <i className="fas fa-trash"></i>
+                      <i className="fas fa-trash-alt"></i>
                     </button>
                   </div>
                 </div>
               ))
             )}
           </div>
-          <div className="border-t border-gray-200 pt-4">
-            <div className="flex justify-between text-lg font-bold">
+          
+          <div className="border-t border-gray-200 pt-4 mt-auto">
+            <div className="flex justify-between text-lg font-bold mb-4">
               <span>Total:</span>
-              <span>{formatRupiah(subtotal)}</span>
+              <span className="text-green-600">{formatRupiah(subtotal)}</span>
             </div>
             <button
-              className="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg mt-6 font-medium"
+              className={`w-full py-3 rounded-lg mt-2 font-medium flex items-center justify-center gap-2 ${
+                cart.length === 0 
+                  ? "bg-gray-300 cursor-not-allowed text-gray-500" 
+                  : "bg-green-500 hover:bg-green-600 text-white"
+              }`}
               onClick={handleCheckout}
+              disabled={cart.length === 0}
             >
+              <i className="fas fa-shopping-bag"></i>
               Checkout
             </button>
           </div>
