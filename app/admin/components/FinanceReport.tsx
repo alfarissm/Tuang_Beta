@@ -462,7 +462,7 @@ export const FinanceReport: React.FC<FinanceReportProps> = ({
                   if (formattedDate === "Invalid Date") {
                     formattedDate = data?.date || `Data #${index + 1}`;
                   }
-                } catch (_) {
+                } catch  {
                   formattedDate = data?.date || `Data #${index + 1}`;
                 }
                 
@@ -512,7 +512,7 @@ export const FinanceReport: React.FC<FinanceReportProps> = ({
                       if (formattedDate === "Invalid Date") {
                         formattedDate = data?.date || `Data #${index + 1}`;
                       }
-                    } catch (_) {
+                    } catch  {
                       formattedDate = data?.date || `Data #${index + 1}`;
                     }
                     
