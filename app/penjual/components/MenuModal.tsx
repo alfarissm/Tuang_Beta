@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { useState, useEffect, useRef } from 'react';
 import { MenuModalProps } from '../types';
 import { categories } from '../utils/constants';
+
 
 export default function MenuModal({ mode, data, onClose, onSave }: MenuModalProps) {
   const [name, setName] = useState(data?.name || "");
@@ -135,12 +137,13 @@ export default function MenuModal({ mode, data, onClose, onSave }: MenuModalProp
           </div>
           {imagePreview && (
             <div className="mt-2">
-              <image 
+              <Image 
                 src={imagePreview} 
                 alt="Preview Gambar" 
                 width={100} 
                 height={64} 
-                className="rounded object-cover" 
+                className="rounded"
+                unoptimized 
               />
             </div>
           )}
