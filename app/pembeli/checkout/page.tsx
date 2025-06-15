@@ -26,7 +26,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <OrderLayout title="Data Diri" compact>
+    <OrderLayout title="Data Diri">
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="space-y-3">
           <div>
