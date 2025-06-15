@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 
 // Import components
+import SideNavigation from "./components/SideNavigation";
 import StatisticsCards from "./components/StatisticsCards";
 import OrdersList from "./components/OrdersList";
 import MenuTable from "./components/MenuTable";
@@ -16,6 +18,9 @@ import useMenus from "./hooks/useMenus";
 import useBestSellerData from "./hooks/useBestSellerData";
 
 export default function SellerPage() {
+  // Active section state
+  const [activeSection, setActiveSection] = useState<string>("dashboard");
+  
   // Authentication hook
   const { user, loading } = useSellerAuth();
   
@@ -49,64 +54,90 @@ export default function SellerPage() {
   const lowStockMenus = myMenus.filter(m => m.stok <= 3);
   
   if (loading) {
-    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-pulse flex flex-col items-center">
+          <div className="rounded-full bg-gray-200 h-16 w-16 mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-24 mb-2.5"></div>
+          <div className="h-3 bg-gray-200 rounded w-32"></div>
+        </div>
+      </div>
+    );
   }
   
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray py-6">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
-          <Image src="/Frame 7.png" alt="Logo" width={40} height={40} />
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard Penjual</h1>
-            <p className="text-gray-700">Selamat datang, <b>{user.nama}</b> ({user.nip})</p>
-          </div>
+    <div className="min-h-screen bg-green-400">
+      {/* Side Navigation */}
+      <SideNavigation 
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        user={user}
+      />
+      
+      {/* Main Content */}
+      <div className="md:ml-64 pt-0 md:pt-5 pb-10 min-h-screen">
+        <div className="container mx-auto px-4">
+          {/* Dashboard Section */}
+          {activeSection === "dashboard" && (
+            <>
+              <div className="hidden md:block mb-6">
+                <h1 className="text-3xl font-bold">Dashboard Penjual</h1>
+                <p className="text-gray-600">Selamat datang, <b>{user.nama}</b></p>
+              </div>
+              
+              <StatisticsCards 
+                totalOrder={totalOrder} 
+                totalCompleted={myOrders.filter(o => o.status === "selesai").length} 
+                totalIncome={totalIncome} 
+              />
+              
+              <DashboardCharts 
+                bestSellerMenu={bestSellerData.menu} 
+                bestSellerMenuQty={bestSellerData.quantity} 
+                lowStockMenus={lowStockMenus} 
+                myOrders={myOrders} 
+              />
+              
+            </>
+          )}
+
+          {/* Orders Section */}
+          {activeSection === "orders" && (
+            <div className="py-4">
+              <OrdersList 
+                orders={filteredOrders} 
+                orderFilter={orderFilter}
+                setOrderFilter={setOrderFilter}
+                updateOrderStatus={updateOrderStatus} 
+              />
+            </div>
+          )}
+
+          {/* Menu Section */}
+          {activeSection === "menu" && (
+            <div className="py-4">
+              <MenuTable 
+                menus={myMenus} 
+                onAddMenu={handleAddMenu} 
+                onEditMenu={handleEditMenu} 
+                onDeleteMenu={handleDeleteMenu} 
+              />
+            </div>
+          )}
         </div>
-        
-        {/* Statistics Cards */}
-        <StatisticsCards 
-          totalOrder={totalOrder} 
-          totalCompleted={myOrders.filter(o => o.status === "selesai").length} 
-          totalIncome={totalIncome} 
-        />
-        
-        {/* Data Visualization Components */}
-        <DashboardCharts 
-          bestSellerMenu={bestSellerData.menu} 
-          bestSellerMenuQty={bestSellerData.quantity} 
-          lowStockMenus={lowStockMenus} 
-          myOrders={myOrders} 
-        />
-        
-        {/* Orders Section */}
-        <OrdersList 
-          orders={filteredOrders} 
-          orderFilter={orderFilter}
-          setOrderFilter={setOrderFilter}
-          updateOrderStatus={updateOrderStatus} 
-        />
-        
-        {/* Menu Management */}
-        <MenuTable 
-          menus={myMenus} 
-          onAddMenu={handleAddMenu} 
-          onEditMenu={handleEditMenu} 
-          onDeleteMenu={handleDeleteMenu} 
-        />
-        
-        {/* Modal for adding/editing menu */}
-        {menuModal && (
-          <MenuModal
-            mode={menuModal.mode}
-            data={menuModal.data}
-            onClose={() => setMenuModal(null)}
-            onSave={handleSaveMenu}
-          />
-        )}
       </div>
+      
+      {/* Modal for adding/editing menu */}
+      {menuModal && (
+        <MenuModal
+          mode={menuModal.mode}
+          data={menuModal.data}
+          onClose={() => setMenuModal(null)}
+          onSave={handleSaveMenu}
+        />
+      )}
     </div>
   );
 }
