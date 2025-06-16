@@ -57,8 +57,8 @@ export default function SellerPage() {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="rounded-full bg-gray-200 h-16 w-16 mb-4"></div>
-          <div className="h-4 bg-gray-200 rounded w-24 mb-2.5"></div>
+          <div className="rounded-full bg-gray-200 h-12 w-12 mb-3"></div>
+          <div className="h-4 bg-gray-200 rounded w-24 mb-2"></div>
           <div className="h-3 bg-gray-200 rounded w-32"></div>
         </div>
       </div>
@@ -76,14 +76,14 @@ export default function SellerPage() {
         user={user}
       />
       
-      {/* Main Content */}
-      <div className="md:ml-64 pt-0 md:pt-5 pb-10 min-h-screen">
-        <div className="container mx-auto px-4">
+      {/* Main Content - Dengan padding yang lebih compact */}
+      <div className="md:ml-64 pt-[10px] md:pt-5 pb-6 min-h-screen">
+        <div className="container mx-auto px-2 sm:px-4">
           {/* Dashboard Section */}
           {activeSection === "dashboard" && (
             <>
-              <div className="hidden md:block mb-6">
-                <h1 className="text-3xl font-bold">Dashboard Penjual</h1>
+              <div className="hidden md:block mb-4">
+                <h1 className="text-2xl md:text-3xl font-bold">Dashboard Penjual</h1>
                 <p className="text-gray-600">Selamat datang, <b>{user.nama}</b></p>
               </div>
               
@@ -99,13 +99,12 @@ export default function SellerPage() {
                 lowStockMenus={lowStockMenus} 
                 myOrders={myOrders} 
               />
-              
             </>
           )}
 
-          {/* Orders Section */}
+          {/* Orders Section - Dengan padding yang lebih compact */}
           {activeSection === "orders" && (
-            <div className="py-4">
+            <div className="py-2 md:py-4">
               <OrdersList 
                 orders={filteredOrders} 
                 orderFilter={orderFilter}
@@ -115,9 +114,9 @@ export default function SellerPage() {
             </div>
           )}
 
-          {/* Menu Section */}
+          {/* Menu Section - Dengan padding yang lebih compact */}
           {activeSection === "menu" && (
-            <div className="py-4">
+            <div className="py-2 md:py-4">
               <MenuTable 
                 menus={myMenus} 
                 onAddMenu={handleAddMenu} 
