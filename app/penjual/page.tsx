@@ -9,7 +9,7 @@ import SideNavigation from "./components/SideNavigation";
 import StatisticsCards from "./components/StatisticsCards";
 import OrdersList from "./components/OrdersList";
 import MenuTable from "./components/MenuTable";
-import DashboardCharts from "./components/DashboardCharts";
+import DashboardCharts from "./components/DashboarSeller";
 import MenuModal from "./components/MenuModal";
 
 // Import hooks
